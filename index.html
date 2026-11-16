@@ -1,948 +1,1012 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>六星占術 運命鑑定書 — 和モダン占い</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: 明朝体・ゴシック体 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        mincho: ['"Shippori Mincho"', 'serif'],
-                        sans: ['"Noto Sans JP"', 'sans-serif'],
-                    },
-                    colors: {
-                        washi: {
-                            base: '#f6f2e9',
-                            card: '#fcfaf4',
-                            dark: '#ebe3d3',
-                            border: '#d6ccb8',
-                        },
-                        sumi: {
-                            900: '#1f1d1a',
-                            700: '#3d3934',
-                            500: '#6e675f',
-                        },
-                        shu: {
-                            600: '#b83227',
-                            700: '#96231a',
-                            100: '#f9e8e6',
-                        },
-                        kin: {
-                            500: '#b38b3f',
-                            100: '#f7f0df',
-                        },
-                        ai: {
-                            800: '#223a5e',
-                            100: '#e8eef5',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* 和紙のテクスチャ風背景と和柄装飾 */
-        body {
-            background-color: #f6f2e9;
-            background-image:
-                radial-gradient(rgba(179, 139, 63, 0.08) 1px, transparent 0),
-                radial-gradient(rgba(31, 29, 26, 0.04) 1px, transparent 0),
-                linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(235,227,211,0.4));
-            background-size: 32px 32px, 19px 19px, 100% 100%;
-            background-position: 0 0, 9px 9px, 0 0;
-            color: #1f1d1a;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>六星占術 運命鑑定書</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-washi: #f5f0e6;
+      --bg-card: #fbf8f1;
+      --bg-accent: #efe7d6;
+      --ink-main: #231f1e;
+      --ink-sub: #5c534e;
+      --ink-muted: #8a7f78;
+      --vermilion: #b83227;
+      --vermilion-light: #f6e6e4;
+      --indigo: #233b58;
+      --indigo-light: #e5ebf2;
+      --gold: #a68236;
+      --gold-light: #f4eedf;
+      --border-color: #d6cbb8;
+      --shadow-soft: 0 8px 24px rgba(35, 31, 30, 0.08);
+    }
 
-        /* 繊細な和風枠線 */
-        .washi-frame {
-            background-color: #fcfaf4;
-            border: 1px solid #d6ccb8;
-            box-shadow: 0 4px 20px rgba(31, 29, 26, 0.06), inset 0 0 0 3px #fcfaf4, inset 0 0 0 4px rgba(179, 139, 63, 0.35);
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        /* 朱印（ハンコ）風バッジ */
-        .hanko-stamp {
-            border: 2px solid #b83227;
-            color: #b83227;
-            font-family: "Shippori Mincho", serif;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            transform: rotate(-3deg);
-            box-shadow: inset 0 0 0 1px rgba(184, 50, 39, 0.3);
-        }
+    body {
+      font-family: 'Shippori Mincho', serif;
+      background-color: var(--bg-washi);
+      color: var(--ink-main);
+      line-height: 1.75;
+      min-height: 100vh;
+      /* 和紙の繊維・質感テクスチャ */
+      background-image:
+        radial-gradient(rgba(166, 130, 54, 0.06) 1px, transparent 0),
+        radial-gradient(rgba(35, 31, 30, 0.04) 1px, transparent 0),
+        linear-gradient(180deg, rgba(255, 252, 245, 0.6) 0%, rgba(238, 229, 213, 0.6) 100%);
+      background-size: 32px 32px, 19px 19px, 100% 100%;
+      background-position: 0 0, 11px 13px, 0 0;
+      padding: 20px 14px 60px;
+    }
 
-        /* タブアニメーション */
-        .tab-btn {
-            transition: all 0.25s ease;
-        }
-        .tab-btn.active {
-            background-color: #223a5e;
-            color: #fcfaf4;
-            border-color: #223a5e;
-            box-shadow: 0 2px 8px rgba(34, 58, 94, 0.25);
-        }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
 
-        /* フェードイン */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-    </style>
+    /* 外枠の和風二重線フレーム */
+    .scroll-frame {
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      padding: 6px;
+    }
+
+    .scroll-inner {
+      border: 1px solid var(--border-color);
+      padding: 32px 24px;
+      position: relative;
+    }
+
+    @media (min-width: 640px) {
+      .scroll-inner {
+        padding: 44px 42px;
+      }
+    }
+
+    /* 四隅の飾り */
+    .corner {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: var(--vermilion);
+      border-style: solid;
+      opacity: 0.75;
+    }
+    .corner.tl { top: 8px; left: 8px; border-width: 2px 0 0 2px; }
+    .corner.tr { top: 8px; right: 8px; border-width: 2px 2px 0 0; }
+    .corner.bl { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; }
+    .corner.br { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
+
+    /* ヘッダー */
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 24px;
+      border-bottom: 1px double var(--border-color);
+    }
+
+    .subtitle-top {
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      color: var(--vermilion);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: var(--ink-main);
+      margin-bottom: 10px;
+    }
+
+    @media (min-width: 640px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    .header-desc {
+      font-size: 0.92rem;
+      color: var(--ink-sub);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* タブナビゲーション */
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .tab-btn {
+      font-family: 'Shippori Mincho', serif;
+      background: var(--bg-accent);
+      border: 1px solid var(--border-color);
+      color: var(--ink-sub);
+      padding: 12px 8px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.06em;
+      border-radius: 2px;
+    }
+
+    @media (min-width: 640px) {
+      .tab-btn {
+        font-size: 1.02rem;
+        padding: 14px 12px;
+      }
+    }
+
+    .tab-btn:hover {
+      background: #e7dcc8;
+      color: var(--ink-main);
+    }
+
+    .tab-btn.active {
+      background: var(--vermilion);
+      color: #fff;
+      border-color: var(--vermilion);
+      box-shadow: 0 3px 10px rgba(184, 50, 39, 0.22);
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 入力フォームエリア */
+    .input-box {
+      background: var(--bg-accent);
+      border: 1px solid var(--border-color);
+      padding: 22px 20px;
+      margin-bottom: 26px;
+      text-align: center;
+    }
+
+    .input-label {
+      display: block;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+      color: var(--ink-main);
+      letter-spacing: 0.08em;
+    }
+
+    .date-selects {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    select {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.05rem;
+      padding: 9px 12px;
+      border: 1px solid var(--border-color);
+      background: #fffdf9;
+      color: var(--ink-main);
+      border-radius: 2px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--vermilion);
+    }
+
+    .date-unit {
+      font-size: 0.95rem;
+      color: var(--ink-sub);
+      margin-right: 4px;
+    }
+
+    .btn-primary {
+      font-family: 'Shippori Mincho', serif;
+      background: var(--ink-main);
+      color: #fffdf9;
+      border: 1px solid var(--ink-main);
+      padding: 12px 34px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-radius: 2px;
+    }
+
+    .btn-primary:hover {
+      background: var(--vermilion);
+      border-color: var(--vermilion);
+    }
+
+    /* 鑑定結果カード */
+    .result-area {
+      display: none;
+    }
+
+    .result-area.show {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .star-header-card {
+      border: 1px solid var(--border-color);
+      background: #fffdf9;
+      padding: 26px 20px;
+      text-align: center;
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .hanko-stamp {
+      display: inline-block;
+      border: 2px solid var(--vermilion);
+      color: var(--vermilion);
+      font-weight: 800;
+      padding: 3px 10px;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+      border-radius: 2px;
+      transform: rotate(-1.5deg);
+    }
+
+    .star-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--ink-main);
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+
+    @media (min-width: 640px) {
+      .star-title {
+        font-size: 2.4rem;
+      }
+    }
+
+    .star-formula {
+      font-size: 0.88rem;
+      color: var(--ink-muted);
+      margin-bottom: 14px;
+    }
+
+    .star-catch {
+      display: inline-block;
+      background: var(--gold-light);
+      color: #6b5018;
+      padding: 6px 16px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 2px;
+    }
+
+    /* セクション見出し */
+    .sec-heading {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: var(--ink-main);
+      border-left: 4px solid var(--vermilion);
+      padding-left: 12px;
+      margin: 28px 0 14px;
+      letter-spacing: 0.06em;
+    }
+
+    .info-box {
+      background: #fffdf9;
+      border: 1px solid var(--border-color);
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      font-size: 0.96rem;
+    }
+
+    /* 今年の運気ハイライト */
+    .this-year-box {
+      border: 1px solid var(--border-color);
+      background: #fffdf9;
+      padding: 20px;
+      margin-bottom: 22px;
+    }
+
+    .this-year-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .year-badge {
+      background: var(--indigo);
+      color: #fff;
+      padding: 4px 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .luck-name {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--ink-main);
+    }
+
+    .luck-tag {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
+
+    .luck-tag.good {
+      background: var(--gold-light);
+      color: #7c5b14;
+      border: 1px solid #d4be8d;
+    }
+
+    .luck-tag.caution {
+      background: var(--indigo-light);
+      color: var(--indigo);
+      border: 1px solid #b5c6d9;
+    }
+
+    .luck-tag.satsukai {
+      background: var(--vermilion-light);
+      color: var(--vermilion);
+      border: 1px solid #e0a8a3;
+    }
+
+    /* テーブル共通 */
+    .table-wrap {
+      overflow-x: auto;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+      background: #fffdf9;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      min-width: 520px;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--bg-accent);
+      font-weight: 700;
+      color: var(--ink-main);
+      white-space: nowrap;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    tr.row-current {
+      background: #fdf9ee;
+      font-weight: 600;
+    }
+
+    tr.row-daisatsukai {
+      background: #fbf3f2;
+    }
+
+    .badge-mini {
+      display: inline-block;
+      font-size: 0.76rem;
+      padding: 2px 7px;
+      font-weight: 700;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .badge-daisatsukai {
+      background: var(--vermilion);
+      color: #fff;
+    }
+
+    .badge-satsukai {
+      background: var(--indigo);
+      color: #fff;
+    }
+
+    .badge-good {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    .badge-normal {
+      background: #e6dfd3;
+      color: var(--ink-sub);
+    }
+
+    /* 相性占いレイアウト */
+    .compat-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    @media (min-width: 680px) {
+      .compat-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .person-card {
+      background: #fffdf9;
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .person-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--vermilion);
+      margin-bottom: 10px;
+      letter-spacing: 0.1em;
+    }
+
+    .compat-result-card {
+      background: #fffdf9;
+      border: 1px solid var(--border-color);
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .compat-pair {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--ink-main);
+    }
+
+    .compat-score-box {
+      display: inline-block;
+      border: 2px solid var(--vermilion);
+      padding: 10px 26px;
+      margin-bottom: 16px;
+      background: var(--vermilion-light);
+    }
+
+    .compat-score-label {
+      font-size: 0.82rem;
+      color: var(--vermilion);
+      font-weight: 700;
+      display: block;
+    }
+
+    .compat-score-val {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--vermilion);
+      letter-spacing: 0.08em;
+    }
+
+    .compat-desc {
+      text-align: left;
+      font-size: 0.96rem;
+      line-height: 1.8;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+  </style>
 </head>
-<body class="font-sans antialiased min-h-screen flex flex-col justify-between">
+<body>
+  <div class="container">
+    <div class="scroll-frame">
+      <div class="scroll-inner">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
 
-    <!-- ヘッダー -->
-    <header class="border-b border-washi-border bg-washi-card/90 backdrop-blur-sm sticky top-0 z-30">
-        <div class="max-w-4xl mx-auto px-4 py-4 sm:py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-                <!-- 家紋風SVGシンボル -->
-                <div class="w-11 h-11 rounded-full bg-ai-800 text-kin-100 flex items-center justify-center border-2 border-kin-500 shadow-sm shrink-0">
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="12" cy="12" r="9" />
-                        <polygon points="12,3 14.5,9.5 21,12 14.5,14.5 12,21 9.5,14.5 3,12 9.5,9.5" fill="rgba(179,139,63,0.25)" />
-                        <circle cx="12" cy="12" r="2" fill="currentColor" />
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-xs tracking-widest text-kin-500 font-mincho font-semibold">東洋伝統占術・運命周期鑑定</p>
-                    <h1 class="text-xl sm:text-2xl font-mincho font-extrabold tracking-wider text-sumi-900">六星占術 運命鑑定書</h1>
-                </div>
-            </div>
-            <div class="text-xs text-sumi-500 font-mincho border border-washi-border bg-washi-base px-3 py-1.5 rounded-full">
-                基準年：令和八年（2026年）版
-            </div>
-        </div>
-    </header>
-
-    <!-- メインコンテンツ -->
-    <main class="max-w-4xl w-full mx-auto px-4 py-6 sm:py-8 flex-grow">
+        <header>
+          <div class="subtitle-top">東洋占術・運命周期鑑定</div>
+          <h1>六星占術 運命鑑定書</h1>
+          <p class="header-desc">生年月日からあなたの「運命星（＋／－）」と、12年周期の運気の流れ、大殺界の時期、お相手との相性を読み解きます。</p>
+        </header>
 
         <!-- ナビゲーションタブ -->
-        <nav aria-label="鑑定メニュー" class="grid grid-cols-3 gap-2 sm:gap-3 mb-6 sm:mb-8">
-            <button type="button" onclick="switchTab('personal')" id="tab-personal"
-                class="tab-btn active font-mincho font-bold text-sm sm:text-base py-3 px-2 sm:px-4 rounded-xl border border-washi-border bg-washi-card text-sumi-700 hover:bg-washi-dark/60 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
-                <span class="text-base sm:text-lg">📜</span>
-                <span>個人鑑定</span>
-            </button>
-            <button type="button" onclick="switchTab('cycle')" id="tab-cycle"
-                class="tab-btn font-mincho font-bold text-sm sm:text-base py-3 px-2 sm:px-4 rounded-xl border border-washi-border bg-washi-card text-sumi-700 hover:bg-washi-dark/60 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
-                <span class="text-base sm:text-lg">🔄</span>
-                <span>12年周期表</span>
-            </button>
-            <button type="button" onclick="switchTab('compatibility')" id="tab-compatibility"
-                class="tab-btn font-mincho font-bold text-sm sm:text-base py-3 px-2 sm:px-4 rounded-xl border border-washi-border bg-washi-card text-sumi-700 hover:bg-washi-dark/60 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
-                <span class="text-base sm:text-lg">💞</span>
-                <span>二人の相性</span>
-            </button>
+        <nav class="tabs" role="tablist">
+          <button class="tab-btn active" data-tab="tab-personal">個人鑑定</button>
+          <button class="tab-btn" data-tab="tab-cycle">12年周期表</button>
+          <button class="tab-btn" data-tab="tab-compat">相性占い</button>
         </nav>
 
-        <!-- ========================================== -->
-        <!-- タブ1：個人鑑定（運命星・今年の運気・12年表） -->
-        <!-- ========================================== -->
-        <section id="panel-personal" class="space-y-6 animate-fade-in">
-            <div class="washi-frame rounded-2xl p-5 sm:p-8">
-                <div class="border-b border-washi-border pb-4 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <div>
-                        <h2 class="text-lg sm:text-xl font-mincho font-bold text-sumi-900 flex items-center gap-2">
-                            <span class="w-2 h-5 bg-shu-600 inline-block rounded-sm"></span>
-                            生年月日から運命星と運気を占う
-                        </h2>
-                        <p class="text-xs sm:text-sm text-sumi-500 mt-1">あなたの生年月日を選択して「鑑定する」を押してください。</p>
-                    </div>
-                </div>
+        <!-- タブ1：個人鑑定 -->
+        <section id="tab-personal" class="tab-panel active">
+          <div class="input-box">
+            <label class="input-label">あなたの生年月日を選択してください</label>
+            <div class="date-selects">
+              <select id="p-year" aria-label="生年"></select><span class="date-unit">年</span>
+              <select id="p-month" aria-label="生月"></select><span class="date-unit">月</span>
+              <select id="p-day" aria-label="生日"></select><span class="date-unit">日</span>
+            </div>
+            <button id="btn-diagnose" class="btn-primary">運命を鑑定する</button>
+          </div>
 
-                <!-- 生年月日入力フォーム -->
-                <div class="bg-washi-base/80 border border-washi-border rounded-xl p-4 sm:p-6">
-                    <div class="grid grid-cols-3 gap-3 sm:gap-4 max-w-lg mx-auto">
-                        <div>
-                            <label for="p-year" class="block text-xs font-mincho font-bold text-sumi-700 mb-1.5">生まれ年（西暦）</label>
-                            <select id="p-year" class="w-full rounded-lg border border-washi-border bg-washi-card px-3 py-2.5 text-sm sm:text-base font-medium text-sumi-900 focus:outline-none focus:ring-2 focus:ring-ai-800"></select>
-                        </div>
-                        <div>
-                            <label for="p-month" class="block text-xs font-mincho font-bold text-sumi-700 mb-1.5">生まれ月</label>
-                            <select id="p-month" class="w-full rounded-lg border border-washi-border bg-washi-card px-3 py-2.5 text-sm sm:text-base font-medium text-sumi-900 focus:outline-none focus:ring-2 focus:ring-ai-800"></select>
-                        </div>
-                        <div>
-                            <label for="p-day" class="block text-xs font-mincho font-bold text-sumi-700 mb-1.5">生まれ日</label>
-                            <select id="p-day" class="w-full rounded-lg border border-washi-border bg-washi-card px-3 py-2.5 text-sm sm:text-base font-medium text-sumi-900 focus:outline-none focus:ring-2 focus:ring-ai-800"></select>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 text-center">
-                        <button type="button" onclick="runPersonalFortune()"
-                            class="w-full sm:w-auto min-w-[240px] bg-shu-600 hover:bg-shu-700 active:scale-[0.99] text-white font-mincho font-bold text-base sm:text-lg py-3.5 px-8 rounded-xl shadow-md transition cursor-pointer">
-                            運命を鑑定する
-                        </button>
-                    </div>
-                </div>
+          <div id="personal-result" class="result-area">
+            <div class="star-header-card">
+              <div id="res-eto" class="hanko-stamp">丑年・陰（－）</div>
+              <div id="res-star-name" class="star-title">金星人（－）</div>
+              <div id="res-formula" class="star-formula">運命数：15 ／ 星数：44</div>
+              <div id="res-catch" class="star-catch">自由奔放で行動力あふれる現実派</div>
             </div>
 
-            <!-- 個人鑑定結果エリア -->
-            <div id="personal-result" class="hidden space-y-6 animate-fade-in">
-                <!-- 運命星カード -->
-                <div class="washi-frame rounded-2xl p-5 sm:p-8 relative overflow-hidden">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-washi-border pb-5">
-                        <div>
-                            <p id="res-birth-text" class="text-xs sm:text-sm text-sumi-500 font-mincho mb-1"></p>
-                            <div class="flex flex-wrap items-baseline gap-3">
-                                <span class="text-sm font-mincho font-bold text-sumi-700">あなたの運命星：</span>
-                                <h3 id="res-star-name" class="text-2xl sm:text-4xl font-mincho font-extrabold text-ai-800 tracking-wide"></h3>
-                            </div>
-                        </div>
-                        <div class="self-start sm:self-center">
-                            <span id="res-zodiac-badge" class="hanko-stamp inline-block px-3.5 py-1.5 rounded text-sm sm:text-base"></span>
-                        </div>
-                    </div>
+            <h2 class="sec-heading">基本性格と特徴</h2>
+            <div id="res-personality" class="info-box"></div>
 
-                    <!-- 性格・特徴 -->
-                    <div class="mt-5 space-y-4">
-                        <div>
-                            <h4 class="font-mincho font-bold text-base text-sumi-900 flex items-center gap-2 mb-2">
-                                <span class="text-kin-500">◆</span> 基本性格と気質
-                            </h4>
-                            <p id="res-star-desc" class="text-sm sm:text-base leading-relaxed text-sumi-700 bg-washi-base/60 p-4 rounded-xl border border-washi-border/70"></p>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="bg-ai-100/60 border border-ai-800/20 rounded-xl p-4">
-                                <p class="text-xs font-mincho font-bold text-ai-800 mb-1">【長所・強み】</p>
-                                <p id="res-star-strength" class="text-sm text-sumi-800 leading-relaxed"></p>
-                            </div>
-                            <div class="bg-shu-100/60 border border-shu-600/20 rounded-xl p-4">
-                                <p class="text-xs font-mincho font-bold text-shu-700 mb-1">【気をつけたい点】</p>
-                                <p id="res-star-caution" class="text-sm text-sumi-800 leading-relaxed"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 今年（2026年）の運勢 -->
-                <div class="washi-frame rounded-2xl p-5 sm:p-8">
-                    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-washi-border pb-4 mb-5">
-                        <h3 class="text-lg sm:text-xl font-mincho font-bold text-sumi-900 flex items-center gap-2">
-                            <span class="w-2 h-5 bg-kin-500 inline-block rounded-sm"></span>
-                            今年（2026年）の運気
-                        </h3>
-                        <span id="res-2026-badge" class="text-xs sm:text-sm font-mincho font-bold px-3 py-1 rounded-full"></span>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 bg-washi-base p-4 rounded-xl border border-washi-border">
-                        <div class="shrink-0 text-center bg-washi-card border border-washi-border rounded-xl px-5 py-3 shadow-sm">
-                            <p class="text-xs text-sumi-500 font-mincho">2026年の運気</p>
-                            <p id="res-2026-cycle" class="text-2xl sm:text-3xl font-mincho font-extrabold text-sumi-900 mt-0.5"></p>
-                            <p id="res-2026-reading" class="text-xs text-sumi-500 mt-0.5"></p>
-                        </div>
-                        <div>
-                            <p id="res-2026-summary" class="font-mincho font-bold text-base sm:text-lg text-sumi-900 mb-1.5"></p>
-                            <p id="res-2026-advice" class="text-sm leading-relaxed text-sumi-700"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- あなた専用の12年運気年表 -->
-                <div class="washi-frame rounded-2xl p-5 sm:p-8">
-                    <div class="mb-4">
-                        <h3 class="text-lg sm:text-xl font-mincho font-bold text-sumi-900 flex items-center gap-2">
-                            <span class="w-2 h-5 bg-ai-800 inline-block rounded-sm"></span>
-                            あなたの12年運命周期年表（2024年〜2035年）
-                        </h3>
-                        <p class="text-xs sm:text-sm text-sumi-500 mt-1">
-                            赤枠の3年間（陰影・停止・減退）が「大殺界」にあたります。人生設計の目安にご活用ください。
-                        </p>
-                    </div>
-
-                    <div class="overflow-x-auto rounded-xl border border-washi-border">
-                        <table class="w-full text-left border-collapse min-w-[540px]">
-                            <thead>
-                                <tr class="bg-washi-dark/80 text-sumi-900 font-mincho text-xs sm:text-sm border-b border-washi-border">
-                                    <th class="py-3 px-4 font-bold">西暦（年齢）</th>
-                                    <th class="py-3 px-4 font-bold">運気</th>
-                                    <th class="py-3 px-4 font-bold">運気度</th>
-                                    <th class="py-3 px-4 font-bold">時期の目安・備考</th>
-                                </tr>
-                            </thead>
-                            <tbody id="res-12year-tbody" class="divide-y divide-washi-border text-sm bg-washi-card">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <h2 class="sec-heading">今年（2026年）の運気</h2>
+            <div class="this-year-box">
+              <div class="this-year-top">
+                <span class="year-badge">2026年（令和8年）</span>
+                <span id="res-2026-luck" class="luck-name">安定</span>
+                <span id="res-2026-tag" class="luck-tag good">収穫の集大成</span>
+              </div>
+              <p id="res-2026-desc"></p>
             </div>
+
+            <h2 class="sec-heading">あなたの12年運気年表（2024年〜2035年）</h2>
+            <p style="font-size:0.88rem; color:var(--ink-sub); margin-bottom:10px;">
+              ※赤く強調されている3年間（陰影・停止・減退）が「大殺界」にあたります。
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>西暦（和暦）</th>
+                    <th>運気</th>
+                    <th>区分</th>
+                    <th>過ごし方の指針</th>
+                  </tr>
+                </thead>
+                <tbody id="res-timeline-body"></tbody>
+              </table>
+            </div>
+          </div>
         </section>
 
-        <!-- ========================================== -->
-        <!-- タブ2：12年運命周期表（わかりやすい解説表） -->
-        <!-- ========================================== -->
-        <section id="panel-cycle" class="hidden space-y-6 animate-fade-in">
-            <div class="washi-frame rounded-2xl p-5 sm:p-8">
-                <div class="border-b border-washi-border pb-4 mb-6">
-                    <h2 class="text-lg sm:text-xl font-mincho font-bold text-sumi-900 flex items-center gap-2">
-                        <span class="w-2 h-5 bg-ai-800 inline-block rounded-sm"></span>
-                        六星占術「12の運命周期」一覧表
-                    </h2>
-                    <p class="text-xs sm:text-sm text-sumi-500 mt-1 leading-relaxed">
-                        六星占術では、すべての人に12年（12ヶ月・12日）周期で同じ順番の運気が巡ってきます。季節の移ろいのように「種まき」から「収穫」、そして「冬眠（大殺界）」へと循環します。
-                    </p>
-                </div>
+        <!-- タブ2：12年周期表 -->
+        <section id="tab-cycle" class="tab-panel">
+          <h2 class="sec-heading" style="margin-top:0;">運命周期・12のサイクル一覧</h2>
+          <p style="font-size:0.93rem; color:var(--ink-sub); margin-bottom:16px;">
+            六星占術では、すべての人の運気が「種子」から「減退」までの12年周期（12ヶ月・12日周期も同様）で巡ると考えます。季節の移り変わりのように、種をまき、育て、収穫し、冬眠して次の春に備えます。
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>順</th>
+                  <th>運気名</th>
+                  <th>区分</th>
+                  <th>季節の例え・意味と過ごし方</th>
+                </tr>
+              </thead>
+              <tbody id="cycle-master-body"></tbody>
+            </table>
+          </div>
 
-                <!-- 12周期テーブル -->
-                <div class="overflow-x-auto rounded-xl border border-washi-border">
-                    <table class="w-full text-left border-collapse min-w-[620px]">
-                        <thead>
-                            <tr class="bg-ai-800 text-washi-card font-mincho text-xs sm:text-sm">
-                                <th class="py-3 px-3 text-center w-14">順番</th>
-                                <th class="py-3 px-4 w-32">運気名</th>
-                                <th class="py-3 px-3 w-28">季節の例え</th>
-                                <th class="py-3 px-3 w-28">運気レベル</th>
-                                <th class="py-3 px-4">意味と過ごし方のポイント</th>
-                            </tr>
-                        </thead>
-                        <tbody id="master-cycle-tbody" class="divide-y divide-washi-border text-sm bg-washi-card">
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- 殺界（小殺界・中殺界・大殺界）の解説コラム -->
-                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-washi-base border border-washi-border rounded-xl p-4">
-                        <span class="inline-block text-xs font-mincho font-bold bg-amber-100 text-amber-900 border border-amber-300 px-2.5 py-0.5 rounded mb-2">4年目：小殺界（健弱）</span>
-                        <h4 class="font-mincho font-bold text-sumi-900 text-sm mb-1">疲れが出やすい小休止の年</h4>
-                        <p class="text-xs text-sumi-700 leading-relaxed">
-                            好調な流れの中で一時的にエネルギーが低下します。無理を重ねると体調を崩しやすいため、検診や休息を優先しましょう。
-                        </p>
-                    </div>
-                    <div class="bg-washi-base border border-washi-border rounded-xl p-4">
-                        <span class="inline-block text-xs font-mincho font-bold bg-orange-100 text-orange-900 border border-orange-300 px-2.5 py-0.5 rounded mb-2">6年目：中殺界（乱気）</span>
-                        <h4 class="font-mincho font-bold text-sumi-900 text-sm mb-1">心が揺れ動きやすい迷いの年</h4>
-                        <p class="text-xs text-sumi-700 leading-relaxed">
-                            大きな幸運期「達成」の直後に訪れ、精神的な迷いや人間関係のすれ違いが起きやすい時期。感情的な決断は控えましょう。
-                        </p>
-                    </div>
-                    <div class="bg-shu-100/70 border border-shu-600/30 rounded-xl p-4">
-                        <span class="inline-block text-xs font-mincho font-bold bg-shu-600 text-white px-2.5 py-0.5 rounded mb-2">10〜12年目：大殺界（3年間）</span>
-                        <h4 class="font-mincho font-bold text-shu-700 text-sm mb-1">陰影・停止・減退の冬眠期</h4>
-                        <p class="text-xs text-sumi-800 leading-relaxed">
-                            次の12年サイクルに向けた充電期間。転職・引っ越し・結婚などの大きな変化は避け、学びや身辺整理、周囲への奉仕に徹すると穏やかに過ごせます。
-                        </p>
-                    </div>
-                </div>
-            </div>
+          <div class="info-box" style="background: var(--vermilion-light); border-color: #e0a8a3;">
+            <strong style="color: var(--vermilion); display:block; margin-bottom:6px;">■ 「大殺界（陰影・停止・減退）」の心得</strong>
+            12年周期の最後の3年間は運気の「真冬」にあたり、新しいこと（結婚・転職・引っ越し・起業・大きな買い物など）を始めるとトラブルや空回りを招きやすいとされます。この時期は無理に動かず、読書や勉強、健康管理、周囲への奉仕など「充電と内省」に充てることで、次の「種子」の年に大きく花開きます。
+          </div>
         </section>
 
-        <!-- ========================================== -->
-        <!-- タブ3：二人の相性占い                       -->
-        <!-- ========================================== -->
-        <section id="panel-compatibility" class="hidden space-y-6 animate-fade-in">
-            <div class="washi-frame rounded-2xl p-5 sm:p-8">
-                <div class="border-b border-washi-border pb-4 mb-6">
-                    <h2 class="text-lg sm:text-xl font-mincho font-bold text-sumi-900 flex items-center gap-2">
-                        <span class="w-2 h-5 bg-shu-600 inline-block rounded-sm"></span>
-                        二人の運命星から相性を占う
-                    </h2>
-                    <p class="text-xs sm:text-sm text-sumi-500 mt-1">
-                        ご自身とお相手（ご家族・パートナー・友人・同僚など）の生年月日を入力してください。
-                    </p>
+        <!-- タブ3：相性占い -->
+        <section id="tab-compat" class="tab-panel">
+          <div class="input-box">
+            <div class="compat-grid">
+              <div class="person-card">
+                <div class="person-label">【 あなた 】の生年月日</div>
+                <div class="date-selects" style="margin-bottom:0;">
+                  <select id="c1-year"></select><span class="date-unit">年</span>
+                  <select id="c1-month"></select><span class="date-unit">月</span>
+                  <select id="c1-day"></select><span class="date-unit">日</span>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                    <!-- あなた -->
-                    <div class="bg-washi-base/80 border border-washi-border rounded-xl p-4 sm:p-5">
-                        <h3 class="font-mincho font-bold text-ai-800 text-base mb-3 flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-full bg-ai-800 text-white text-xs flex items-center justify-center">壱</span>
-                            あなたの生年月日
-                        </h3>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div>
-                                <label for="c1-year" class="block text-xs text-sumi-600 mb-1">年</label>
-                                <select id="c1-year" class="w-full rounded-lg border border-washi-border bg-washi-card px-2 py-2 text-sm text-sumi-900"></select>
-                            </div>
-                            <div>
-                                <label for="c1-month" class="block text-xs text-sumi-600 mb-1">月</label>
-                                <select id="c1-month" class="w-full rounded-lg border border-washi-border bg-washi-card px-2 py-2 text-sm text-sumi-900"></select>
-                            </div>
-                            <div>
-                                <label for="c1-day" class="block text-xs text-sumi-600 mb-1">日</label>
-                                <select id="c1-day" class="w-full rounded-lg border border-washi-border bg-washi-card px-2 py-2 text-sm text-sumi-900"></select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- お相手 -->
-                    <div class="bg-washi-base/80 border border-washi-border rounded-xl p-4 sm:p-5">
-                        <h3 class="font-mincho font-bold text-shu-700 text-base mb-3 flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-full bg-shu-600 text-white text-xs flex items-center justify-center">弐</span>
-                            お相手の生年月日
-                        </h3>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div>
-                                <label for="c2-year" class="block text-xs text-sumi-600 mb-1">年</label>
-                                <select id="c2-year" class="w-full rounded-lg border border-washi-border bg-washi-card px-2 py-2 text-sm text-sumi-900"></select>
-                            </div>
-                            <div>
-                                <label for="c2-month" class="block text-xs text-sumi-600 mb-1">月</label>
-                                <select id="c2-month" class="w-full rounded-lg border border-washi-border bg-washi-card px-2 py-2 text-sm text-sumi-900"></select>
-                            </div>
-                            <div>
-                                <label for="c2-day" class="block text-xs text-sumi-600 mb-1">日</label>
-                                <select id="c2-day" class="w-full rounded-lg border border-washi-border bg-washi-card px-2 py-2 text-sm text-sumi-900"></select>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+              <div class="person-card">
+                <div class="person-label">【 お相手 】の生年月日</div>
+                <div class="date-selects" style="margin-bottom:0;">
+                  <select id="c2-year"></select><span class="date-unit">年</span>
+                  <select id="c2-month"></select><span class="date-unit">月</span>
+                  <select id="c2-day"></select><span class="date-unit">日</span>
                 </div>
-
-                <div class="mt-6 text-center">
-                    <button type="button" onclick="runCompatibilityFortune()"
-                        class="w-full sm:w-auto min-w-[240px] bg-ai-800 hover:bg-sumi-900 active:scale-[0.99] text-white font-mincho font-bold text-base sm:text-lg py-3.5 px-8 rounded-xl shadow-md transition cursor-pointer">
-                        二人の相性を鑑定する
-                    </button>
-                </div>
+              </div>
             </div>
+            <button id="btn-compat" class="btn-primary">二人の相性を鑑定する</button>
+          </div>
 
-            <!-- 相性鑑定結果エリア -->
-            <div id="comp-result" class="hidden space-y-6 animate-fade-in">
-                <div class="washi-frame rounded-2xl p-5 sm:p-8">
-                    <!-- 二人の運命星対比 -->
-                    <div class="grid grid-cols-1 sm:grid-cols-11 gap-3 items-center bg-washi-base p-4 sm:p-5 rounded-xl border border-washi-border mb-6">
-                        <div class="sm:col-span-5 text-center p-3 bg-washi-card rounded-lg border border-washi-border">
-                            <p class="text-xs text-sumi-500 font-mincho">あなた</p>
-                            <p id="comp-star1" class="text-xl sm:text-2xl font-mincho font-extrabold text-ai-800 mt-1"></p>
-                            <p id="comp-cycle1" class="text-xs text-sumi-600 mt-1"></p>
-                        </div>
-                        <div class="sm:col-span-1 text-center font-mincho font-bold text-shu-600 text-xl">
-                            ×
-                        </div>
-                        <div class="sm:col-span-5 text-center p-3 bg-washi-card rounded-lg border border-washi-border">
-                            <p class="text-xs text-sumi-500 font-mincho">お相手</p>
-                            <p id="comp-star2" class="text-xl sm:text-2xl font-mincho font-extrabold text-shu-700 mt-1"></p>
-                            <p id="comp-cycle2" class="text-xs text-sumi-600 mt-1"></p>
-                        </div>
-                    </div>
-
-                    <!-- 相性スコアとタイトル -->
-                    <div class="text-center border-b border-washi-border pb-5 mb-5">
-                        <p class="text-xs font-mincho text-sumi-500 tracking-widest mb-1">総合相性度</p>
-                        <div id="comp-stars-rank" class="text-2xl sm:text-3xl text-kin-500 tracking-widest mb-2"></div>
-                        <h3 id="comp-title" class="text-xl sm:text-2xl font-mincho font-extrabold text-sumi-900"></h3>
-                    </div>
-
-                    <!-- 相性解説とアドバイス -->
-                    <div class="space-y-4">
-                        <div>
-                            <h4 class="font-mincho font-bold text-base text-sumi-900 flex items-center gap-2 mb-2">
-                                <span class="text-shu-600">◆</span> 二人の関係性と惹かれ合う理由
-                            </h4>
-                            <p id="comp-desc" class="text-sm sm:text-base leading-relaxed text-sumi-700 bg-washi-base/60 p-4 rounded-xl border border-washi-border/70"></p>
-                        </div>
-                        <div class="bg-kin-100/70 border border-kin-500/30 rounded-xl p-4">
-                            <h4 class="font-mincho font-bold text-sm text-sumi-900 mb-1">【末永く良い関係を築くための秘訣】</h4>
-                            <p id="comp-advice" class="text-sm text-sumi-800 leading-relaxed"></p>
-                        </div>
-                    </div>
-                </div>
+          <div id="compat-result" class="result-area">
+            <div class="compat-result-card">
+              <div id="compat-pair-title" class="compat-pair">金星人（－） × 土星人（＋）</div>
+              <div class="compat-score-box">
+                <span class="compat-score-label">総合相性度</span>
+                <span id="compat-score" class="compat-score-val">★★★★☆（85点）</span>
+              </div>
+              <div id="compat-summary" style="font-weight:700; color:var(--indigo); margin-bottom:10px;">
+                互いの違いが刺激になる好バランスな関係
+              </div>
+              <div id="compat-detail" class="compat-desc"></div>
             </div>
+          </div>
         </section>
 
-    </main>
+        <footer>
+          六星占術 運命鑑定書 ／ 運気の流れを知り、日々を穏やかに整えるための指針としてご活用ください。
+        </footer>
+      </div>
+    </div>
+  </div>
 
-    <!-- フッター -->
-    <footer class="border-t border-washi-border bg-washi-card/80 py-6 mt-10">
-        <div class="max-w-4xl mx-auto px-4 text-center text-xs text-sumi-500 space-y-1.5 font-mincho">
-            <p>※本アプリの鑑定結果は東洋占術（六星占術）の伝統的な運命周期理論をもとに構成しています。</p>
-            <p>人生の節目や日々の暮らしをより豊かにするヒントとしてお楽しみください。</p>
-        </div>
-    </footer>
+  <script>
+    // =========================================================
+    // 1. マスターデータ定義
+    // =========================================================
+    const ETO_LIST = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 
-    <script>
-        // ============================================================
-        // 1. マスターデータ定義（運命星・12運命周期・相性ロジック）
-        // ============================================================
+    const STARS_INFO = {
+      '土星人': {
+        catch: '理想と正義感を貫く完璧主義者',
+        personality: '真面目で責任感が強く、高い理想に向かってコツコツと努力を積み重ねるタイプです。曲がったことが嫌いな正義感の持ち主ですが、自分の信念を曲げない頑固さや、少し融通が利かない一面もあります。家庭や伝統を大切にし、信頼を裏切らない誠実さが最大の魅力です。',
+        baseIndex: 0 // 種子となる干支インデックス基準（子=0）
+      },
+      '金星人': {
+        catch: '自由奔放で行動力あふれる現実派',
+        personality: '明るく社交的で、思い立ったらすぐに行動するスピード感とフットワークの軽さを持っています。新しい情報やトレンドに敏感で、合理的な判断が得意です。束縛を嫌う自由人ゆえに熱しやすく冷めやすい傾向もありますが、その屈託のない明るさで周囲を惹きつけます。',
+        baseIndex: 10 // 戌=10
+      },
+      '火星人': {
+        catch: '独自の美学を持つミステリアスな芸術家肌',
+        personality: 'プライドが高く、自分の世界観やこだわりを大切にする独創的なタイプです。初対面では人見知りをしてクールに見られがちですが、一度心を許した相手や身内には深い愛情と情熱を注ぎます。他人に流されない強い芯と鋭い直感力を備えています。',
+        baseIndex: 8 // 申=8
+      },
+      '天王星人': {
+        catch: '愛情深く人を惹きつけるロマンチスト',
+        personality: '優しく穏やかで、誰とでもすぐに打ち解けられる温かい人柄の持ち主です。寂しがり屋で人と関わることが大好きなため、周囲にはいつも人が集まります。情に厚い分、決断を先延ばしにしたり優柔不断になったりしやすい面もありますが、持ち前の愛嬌で困難を乗り切ります。',
+        baseIndex: 6 // 午=6
+      },
+      '木星人': {
+        catch: '堅実な努力で信頼を築く大器晩成型',
+        personality: '控えめで礼儀正しく、ルールや秩序を重んじる堅実派です。派手な冒険よりも確実な道を選び、忍耐強く物事を成し遂げる力を持っています。若い頃は苦労することもありますが、年齢を重ねるごとに実力と人望が開花する大器晩成の星です。',
+        baseIndex: 4 // 辰=4
+      },
+      '水星人': {
+        catch: 'クールな知性と商才を備えた独立独歩の星',
+        personality: '冷静沈着で状況判断に優れ、経済観念やビジネスのセンス（商才）に恵まれたタイプです。独立心が旺盛で、人に頼らず自分の力で道を切り開く強さを持っています。一見ドライでマイペースに見えますが、親しい人への面倒見はとても良い一面があります。',
+        baseIndex: 2 // 寅=2
+      }
+    };
 
-        const BASE_YEAR = 2026; // 基準年
+    const CYCLE_12 = [
+      { name: '種子', type: 'good', label: '好運気・始動', short: '物事のスタート・種まきに最適', desc: '12年周期の始まりとなる「春」の入り口です。新しい目標を立てたり、新規事業・習い事・交友関係をスタートさせたりするのに絶好のタイミングです。' },
+      { name: '緑生', type: 'good', label: '好運気・成長', short: '芽が出て順調に育つ成長期', desc: '「種子」の年に始めたことが少しずつ形になり、成長を実感できる時期です。周囲の協力も得られやすく、積極的に行動範囲を広げることで運気が伸びます。' },
+      { name: '立花', type: 'good', label: '好運気・開花', short: '方向性が定まり花が咲く時期', desc: '人生の基盤や方向性がしっかりと定まり、公私ともに充実する好調期です。努力が具体的な成果として表れやすく、自信を持って前へ進めます。' },
+      { name: '健弱', type: 'satsukai', label: '小殺界・休息', short: '小休止・体調管理を優先する時期', desc: 'これまでの疲れが一気に出やすい「小殺界」です。無理をして突き進むと体調を崩したり判断ミスを招いたりするため、スケジュールにゆとりを持ちましょう。' },
+      { name: '達成', type: 'good', label: '最大好運気', short: '望みが叶う12年周期の頂点', desc: '12年周期の中で最も運気が輝く「真夏」の頂点です。これまでの努力が実を結び、大きな目標の達成や喜ばしい出来事が訪れやすい最高の時期です。' },
+      { name: '乱気', type: 'satsukai', label: '中殺界・迷い', short: '精神的な迷いや人間関係に注意', desc: '心の中に迷いや不安が生じやすい「中殺界」です。感情的な判断や衝動的な行動は控え、周囲とのコミュニケーションを丁寧に行うことでトラブルを防げます。' },
+      { name: '再会', type: 'good', label: '好運気・再始動', short: '再チャレンジや良縁が戻る時期', desc: '低迷していた運気が再び上昇に転じます。一度諦めたことへの再挑戦や、疎遠になっていた人との再会・復縁など、嬉しいチャンスが巡ってくる時期です。' },
+      { name: '財成', type: 'good', label: '好運気・金運', short: '経済的な実りや評価を得る時期', desc: '金運・物質運が非常に高まる収穫の秋です。仕事での昇進や収入アップ、資産形成など、これまでの頑張りが目に見える形となって返ってきます。' },
+      { name: '安定', type: 'good', label: '好運気・集大成', short: '収穫の集大成・穏やかに整える年', desc: 'これまでの成果が定着し、心身ともに満たされる穏やかな好運気です。翌年から始まる3年間の「大殺界」に備え、身辺や環境を整えておくと安心です。' },
+      { name: '陰影', type: 'daisatsukai', label: '大殺界（1年目）', short: '大殺界の入り口・現状維持を徹底', desc: '3年間続く「大殺界」の始まり（冬の入り口）です。大きな決断・転職・引っ越し・新規契約などは避け、慎重さと現状維持を心がけてください。' },
+      { name: '停止', type: 'daisatsukai', label: '大殺界（2年目）', short: '大殺界の中心・学びと休息に専念', desc: '12年周期の中で最も運気が低迷する「真冬」の時期です。新しいことは一切始めず、読書や勉強、健康管理、周囲への感謝など内側を整えることに徹しましょう。' },
+      { name: '減退', type: 'daisatsukai', label: '大殺界（3年目）', short: '大殺界の最終年・春を待つ準備期間', desc: '冬の終わりが近づき少しずつ気が緩みやすい時期ですが、まだ大殺界の渦中です。フライングして動き出さず、翌年の「種子」に向けた計画づくりに充てましょう。' }
+    ];
 
-        // 干支配列（西暦年 % 12 用：4=子, 5=丑, ...）
-        const ZODIAC_LIST = ['子（ね）', '丑（うし）', '寅（とら）', '卯（うさぎ）', '辰（たつ）', '巳（へび）', '午（うま）', '未（ひつじ）', '申（さる）', '酉（とり）', '戌（いぬ）', '亥（いぬい）'];
+    // =========================================================
+    // 2. 正確な六星占術 算出ロジック
+    // =========================================================
+    /**
+     * 1900年1月1日を基準とした通算日数を計算し、
+     * 60干支サイクルから正確な「運命数（1〜60）」を算出する。
+     */
+    function getUnmeisu(year, month) {
+      // 1900年1月1日からの経過日数を算出（協定世界時ベースで時差ズレ防止）
+      const baseUtc = Date.UTC(1900, 0, 1);
+      const targetUtc = Date.UTC(year, month - 1, 1);
+      const diffDays = Math.floor((targetUtc - baseUtc) / (1000 * 60 * 60 * 24));
+      // 1900年1月の基準オフセット（1961年6月＝15 と一致する60周期）
+      const num = ((diffDays + 34) % 60 + 60) % 60;
+      return num === 0 ? 60 : num;
+    }
 
-        // 6つの運命星データ
-        const STAR_DATA = {
-            '土星人': {
-                desc: '理想が高く真面目で、強い正義感と責任感を持つ人です。自分の信念を大切にし、一度決めたことは最後までやり抜く粘り強さがあります。精神世界や伝統を重んじる落ち着いた気質の持ち主です。',
-                strength: '誠実で信頼が厚く、周囲から頼られるリーダーシップや精神的な強さを持っています。',
-                caution: '自分のルールにこだわりすぎて頑固になったり、融通が利かなくなったりすることがあるため、柔軟さを意識すると吉。'
-            },
-            '金星人': {
-                desc: '明るく自由奔放で、抜群の行動力と社交性を持つ人です。新しい情報やトレンドに敏感で、合理的な判断ができます。束縛を嫌い、常に前向きに人生を楽しむ華やかな魅力を備えています。',
-                strength: '決断と行動がスピーディで、どんな環境でも明るく切り開いていく柔軟性と華やかさがあります。',
-                caution: '熱しやすく冷めやすい一面があり、飽きっぽくなったり詰めが甘くなったりしやすいため、継続力を意識すると吉。'
-            },
-            '火星人': {
-                desc: '独自の感性と高いプライドを持つミステリアスな魅力の持ち主です。人見知りな一面もありますが、一度心を許した相手には深い愛情と情熱を注ぎます。芸術や専門分野で才能を発揮しやすいタイプです。',
-                strength: '鋭い直感力と独創的なアイデアを持ち、自分の世界観を貫いて大きな成果を生み出せます。',
-                caution: '感情の起伏が激しくなりやすく、本音を隠して誤解されることがあるため、素直な言葉で伝えることを心がけると吉。'
-            },
-            '天王星人': {
-                desc: '愛情深く穏やかで、周囲の人を包み込む優しさを持つロマンチストです。寂しがり屋な一面もあり、人と人との絆や温かい家庭・コミュニティを何よりも大切にします。',
-                strength: '誰とでも打ち解けられる愛嬌と包容力があり、周囲に自然と人が集まる人徳を備えています。',
-                caution: '情に流されやすく優柔不断になりがちなため、時には自分の意志をはっきりと優先することが大切です。'
-            },
-            '木星人': {
-                desc: '堅実で努力家、秩序やルールを重んじる大器晩成型の星です。派手さはなくともコツコツと信用と実績を積み上げ、年齢を重ねるごとに大きな安定と信頼を手に入れます。',
-                strength: '忍耐力と計画性に優れ、家庭や組織の基盤をしっかりと支える揺るぎない安心感があります。',
-                caution: '変化を恐れて慎重になりすぎたり、世間体を気にしすぎたりする傾向があるため、時には冒険心を持つと吉。'
-            },
-            '水星人': {
-                desc: '独立心が強くクールで、優れた知性と商才を持つ現実主義者です。自分のペースを大切にし、感情に流されず冷静に物事を見極める力があります。初代運があり、自分の力で道を切り開きます。',
-                strength: '冷静な分析力と経済感覚に優れ、どんな状況でも自立して生き抜くたくましさを備えています。',
-                caution: 'ドライで個人主義に見られがちなため、身近な人への感謝や思いやりを言葉や態度で示すと運気がさらに開けます。'
-            }
-        };
+    function calculateRokusei(year, month, day) {
+      // 1. 運命数（1〜60）
+      const unmeisu = getUnmeisu(year, month);
 
-        // 12運命周期データ（0〜11）
-        const CYCLE_DATA = [
-            {
-                name: '種子', reading: 'しゅし', season: '春のはじまり', stars: '★★★★☆', type: 'good',
-                shortNote: '物事のスタートに最適な年',
-                summary: '新しい12年サイクルの幕開け！種まきの好機です。',
-                advice: '大殺界が明け、運気が一気に春へと向かいます。新しい趣味、学び、仕事、人間関係など、これから育てたいことの「種」をまくのに絶好のタイミングです。積極的に一歩を踏み出しましょう。'
-            },
-            {
-                name: '緑生', reading: 'りょくせい', season: '若葉の春', stars: '★★★★☆', type: 'good',
-                shortNote: '芽が出て順調に育つ成長期',
-                summary: 'まいた種が芽吹き、順調に育っていく成長の年です。',
-                advice: '昨年始めたことが形になり始め、手応えを感じられる時期です。まだ焦って結果を求める段階ではありませんが、周囲のサポートも得やすいので、前向きに努力を積み重ねてください。'
-            },
-            {
-                name: '立花', reading: 'りっか', season: '初夏', stars: '★★★★★', type: 'best',
-                shortNote: '方向性が定まり花開く飛躍期',
-                summary: '人生の基盤が固まり、大きく花開く充実の年です。',
-                advice: '今後の12年間の方向性が明確になり、仕事やプライベートで重要な転機やチャンスが訪れます。自信を持って自分の進む道を選び取ることで、大きな飛躍につながります。'
-            },
-            {
-                name: '健弱', reading: 'けんじゃく', season: '梅雨（小殺界）', stars: '★★☆☆☆', type: 'sakkai-small',
-                shortNote: '【小殺界】体調管理と小休止の年',
-                summary: '好調な流れの中の小休止。心身のメンテナンスを優先しましょう。',
-                advice: 'これまで勢いよく走ってきた疲れが出やすい「小殺界」の年です。無理なスケジュールは避け、健康診断や休息をしっかり取ることで、翌年の大幸運期「達成」へ万全の状態で進めます。'
-            },
-            {
-                name: '達成', reading: 'たっせい', season: '真夏', stars: '★★★★★', type: 'best',
-                shortNote: '望みが叶う12年周期最大の幸運期',
-                summary: '12年周期の中で最も運気が輝く、最大の幸運期です！',
-                advice: 'これまでの努力が実を結び、目標の達成や嬉しい出来事が舞い込みやすい最高の運気です。遠慮せず積極的に行動し、巡ってきたチャンスをしっかりと掴み取りましょう。'
-            },
-            {
-                name: '乱気', reading: 'らんき', season: '残暑（中殺界）', stars: '★★☆☆☆', type: 'sakkai-mid',
-                shortNote: '【中殺界】精神的な迷いが生じやすい年',
-                summary: '気持ちが揺れ動きやすい「中殺界」。冷静さと謙虚さが鍵です。',
-                advice: '「達成」の直後で気が緩みやすく、予想外の迷いや人間関係のすれ違いが起きやすい時期です。大きな決断や感情的な行動は控え、周囲の意見に耳を傾けながら慎重に過ごしましょう。'
-            },
-            {
-                name: '再会', reading: 'さいかい', season: '初秋', stars: '★★★★☆', type: 'good',
-                shortNote: '再挑戦や嬉しいご縁が戻る年',
-                summary: '運気が再び上昇！再スタートや旧交の復活に恵まれる年です。',
-                advice: '迷いが晴れ、再び前向きなエネルギーが戻ってきます。以前諦めたことへの再挑戦や、懐かしい人との再会から新しいチャンスが生まれる暗示があります。'
-            },
-            {
-                name: '財成', reading: 'ざいせい', season: '実りの秋', stars: '★★★★★', type: 'best',
-                shortNote: '金運や物質的な実りを得る収穫期',
-                summary: '経済的な豊かさや大きな成果を収穫できる実りの年です。',
-                advice: 'これまでの頑張りが収入や評価、人脈といった目に見える形になって返ってきます。将来のための貯蓄や堅実な資産運用を始めるのにも適した時期です。'
-            },
-            {
-                name: '安定', reading: 'あんてい', season: '晩秋', stars: '★★★★☆', type: 'good',
-                shortNote: '収穫の集大成、心身ともに満たされる年',
-                summary: 'すべてが穏やかに整い、満ち足りた時間を過ごせる集大成の年です。',
-                advice: 'これまで築いてきた成果をしっかりと守り、心穏やかに過ごせる時期です。来年からの「大殺界」に備え、年内に身の回りの整理ややり残したことの完了を済ませておくと安心です。'
-            },
-            {
-                name: '陰影', reading: 'いんえい', season: '初冬（大殺界1年目）', stars: '★☆☆☆☆', type: 'sakkai-big',
-                shortNote: '【大殺界・1年目】運気の冬入り。守りに徹する年',
-                summary: '3年間の大殺界の入り口。大きな決断は控え、現状維持を心がけましょう。',
-                advice: '運気が冬へと入り、判断力が鈍りやすくなります。転職・引っ越し・結婚・新規事業など環境を大きく変えることは避け、今ある日常や人間関係を丁寧に守ることに専念してください。'
-            },
-            {
-                name: '停止', reading: 'ていし', season: '真冬（大殺界2年目）', stars: '★☆☆☆☆', type: 'sakkai-big',
-                shortNote: '【大殺界・2年目】最も運気が停滞する充電の年',
-                summary: '大殺界のど真ん中。無理に動かず、読書や学びなど内側を満たす年です。',
-                advice: '12年周期で最も運気が静まり返る時期です。思い通りにいかないことがあっても「今は冬眠の時期」と割り切り、休息・教養・家族への奉仕など穏やかな時間を大切に過ごしましょう。'
-            },
-            {
-                name: '減退', reading: 'げんたい', season: '晩冬（大殺界3年目）', stars: '★☆☆☆☆', type: 'sakkai-big',
-                shortNote: '【大殺界・3年目】春を待つ大殺界の最終年',
-                summary: '大殺界の締めくくり。焦らず春（種子）に向けた準備を整える年です。',
-                advice: '少しずつ春の気配が見え始めますが、まだ完全に運気は明けていません。フライングして動き出すのは控え、翌年の「種子」でスタートを切るための計画づくりや整理整頓に充てましょう。'
-            }
-        ];
+      // 2. 星数（1〜60） = (運命数 + 生まれ日 - 1) を1〜60に正規化
+      let seisu = (unmeisu + day - 1) % 60;
+      if (seisu <= 0) seisu += 60;
 
-        // 2026年における各運命星（＋／－）の運気インデックス（0〜11）
-        const CYCLE_INDEX_2026 = {
-            '土星人（＋）': 9,  // 陰影
-            '土星人（－）': 8,  // 安定
-            '金星人（＋）': 7,  // 財成
-            '金星人（－）': 8,  // 安定
-            '火星人（＋）': 6,  // 再会
-            '火星人（－）': 7,  // 財成
-            '天王星人（＋）': 5, // 乱気
-            '天王星人（－）': 6, // 再会
-            '木星人（＋）': 4,  // 達成
-            '木星人（－）': 5,  // 乱気
-            '水星人（＋）': 3,  // 健弱
-            '水星人（－）': 4   // 達成
-        };
+      // 3. 運命星の判定
+      let starName = '';
+      if (seisu >= 1 && seisu <= 10) starName = '土星人';
+      else if (seisu >= 11 && seisu <= 20) starName = '金星人';
+      else if (seisu >= 21 && seisu <= 30) starName = '火星人';
+      else if (seisu >= 31 && seisu <= 40) starName = '天王星人';
+      else if (seisu >= 41 && seisu <= 50) starName = '木星人';
+      else starName = '水星人';
 
-        // ============================================================
-        // 2. 六星占術の計算ロジック
-        // ============================================================
+      // 4. 干支とプラス（＋）／マイナス（－）の判定
+      // 西暦年を12で割った余り：4が子(0)、5が丑(1)...
+      const etoIndex = ((year - 4) % 12 + 12) % 12;
+      const etoName = ETO_LIST[etoIndex];
+      const isPlus = (etoIndex % 2 === 0); // 子(0),寅(2),辰(4),午(6),申(8),戌(10) が陽(＋)
+      const polarity = isPlus ? '＋' : '－';
+      const polarityLabel = isPlus ? '陽（＋）' : '陰（－）';
 
-        /**
-         * 生年月日から運命星・陰陽・干支・2026年基準の運気インデックスを算出
-         * 基準日：1961年6月1日の運命数を15とし、そこからの経過日数（60日周期）から運命数を正確に導出
-         */
-        function calculateRokusei(year, month, day) {
-            // UTCタイムスタンプで対象年月の1日と基準日(1961-06-01)の日数差を計算
-            const baseDateUTC = Date.UTC(1961, 5, 1); // 1961年6月1日 (monthは0始まり)
-            const targetMonthFirstUTC = Date.UTC(year, month - 1, 1);
-            const diffDays = Math.round((targetMonthFirstUTC - baseDateUTC) / (1000 * 60 * 60 * 24));
+      return {
+        unmeisu,
+        seisu,
+        starName,
+        etoName,
+        polarity,
+        polarityLabel,
+        fullStar: `${starName}（${polarity}）`,
+        isPlus
+      };
+    }
 
-            // 運命数 (1〜60)
-            let unmeisu = ((15 + diffDays) % 60 + 60) % 60;
-            if (unmeisu === 0) unmeisu = 60;
+    /**
+     * 指定した西暦年の運気（CYCLE_12のインデックス 0〜11）を算出
+     */
+    function getYearCycleIndex(starName, isPlus, targetYear) {
+      const targetEtoIndex = ((targetYear - 4) % 12 + 12) % 12;
+      let seedEtoIndex = STARS_INFO[starName].baseIndex;
+      // マイナス（－）星人は、プラス（＋）星人より干支が1つ後ろ（＋1）の年に種子が巡る
+      if (!isPlus) {
+        seedEtoIndex = (seedEtoIndex + 1) % 12;
+      }
+      return ((targetEtoIndex - seedEtoIndex) % 12 + 12) % 12;
+    }
 
-            // 星数 = 運命数 - 1 + 生まれ日 (1〜60)
-            let hoshisu = unmeisu - 1 + day;
-            while (hoshisu > 60) hoshisu -= 60;
-            while (hoshisu <= 0) hoshisu += 60;
+    function toWareki(year) {
+      if (year >= 2019) return `令和${year - 2018 === 1 ? '元' : year - 2018}年`;
+      if (year >= 1989) return `平成${year - 1988 === 1 ? '元' : year - 1988}年`;
+      if (year >= 1926) return `昭和${year - 1925 === 1 ? '元' : year - 1925}年`;
+      return `大正${year - 1911}年`;
+    }
 
-            // 星数から運命星を判定
-            let baseStar = '';
-            if (hoshisu <= 10) baseStar = '土星人';
-            else if (hoshisu <= 20) baseStar = '金星人';
-            else if (hoshisu <= 30) baseStar = '火星人';
-            else if (hoshisu <= 40) baseStar = '天王星人';
-            else if (hoshisu <= 50) baseStar = '木星人';
-            else baseStar = '水星人';
+    // =========================================================
+    // 3. UI初期化・セレクトボックス生成
+    // =========================================================
+    function populateDateSelectors(yId, mId, dId, defaultY, defaultM, defaultD) {
+      const ySel = document.getElementById(yId);
+      const mSel = document.getElementById(mId);
+      const dSel = document.getElementById(dId);
 
-            // 干支と陰陽（＋／－）の判定
-            const zodiacIndex = ((year - 4) % 12 + 12) % 12;
-            const zodiacName = ZODIAC_LIST[zodiacIndex];
-            const polarity = (zodiacIndex % 2 === 0) ? '＋' : '－';
-            const fullStarName = `${baseStar}（${polarity}）`;
+      for (let y = 1930; y <= 2026; y++) {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = `${y}（${toWareki(y)}）`;
+        if (y === defaultY) opt.selected = true;
+        ySel.appendChild(opt);
+      }
 
-            // 2026年の運気インデックス
-            const cycle2026Index = CYCLE_INDEX_2026[fullStarName];
+      for (let m = 1; m <= 12; m++) {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        if (m === defaultM) opt.selected = true;
+        mSel.appendChild(opt);
+      }
 
-            return {
-                year,
-                month,
-                day,
-                unmeisu,
-                hoshisu,
-                baseStar,
-                polarity,
-                fullStarName,
-                zodiacName,
-                cycle2026Index
-            };
+      function updateDays() {
+        const y = parseInt(ySel.value, 10);
+        const m = parseInt(mSel.value, 10);
+        const currentD = parseInt(dSel.value, 10) || defaultD;
+        const maxDays = new Date(y, m, 0).getDate();
+        dSel.innerHTML = '';
+        for (let d = 1; d <= maxDays; d++) {
+          const opt = document.createElement('option');
+          opt.value = d;
+          opt.textContent = d;
+          if (d === Math.min(currentD, maxDays)) opt.selected = true;
+          dSel.appendChild(opt);
         }
+      }
 
-        // ============================================================
-        // 3. UI初期化・セレクトボックス生成
-        // ============================================================
+      ySel.addEventListener('change', updateDays);
+      mSel.addEventListener('change', updateDays);
+      updateDays();
+    }
 
-        function populateDateSelectors(yearId, monthId, dayId, defaultYear, defaultMonth, defaultDay) {
-            const yearSel = document.getElementById(yearId);
-            const monthSel = document.getElementById(monthId);
-            const daySel = document.getElementById(dayId);
+    // 12年周期マスターテーブルの描画
+    function renderMasterCycleTable() {
+      const tbody = document.getElementById('cycle-master-body');
+      tbody.innerHTML = CYCLE_12.map((c, idx) => {
+        let badgeClass = 'badge-good';
+        if (c.type === 'daisatsukai') badgeClass = 'badge-daisatsukai';
+        else if (c.type === 'satsukai') badgeClass = 'badge-satsukai';
 
-            // 年 (1930〜2026)
-            for (let y = 2026; y >= 1930; y--) {
-                const opt = document.createElement('option');
-                opt.value = y;
-                opt.textContent = `${y}年`;
-                if (y === defaultYear) opt.selected = true;
-                yearSel.appendChild(opt);
-            }
+        const rowClass = c.type === 'daisatsukai' ? ' class="row-daisatsukai"' : '';
+        return `
+          <tr${rowClass}>
+            <td><strong>${idx + 1}</strong></td>
+            <td><strong>${c.name}</strong></td>
+            <td><span class="badge-mini ${badgeClass}">${c.label}</span></td>
+            <td>${c.desc}</td>
+          </tr>
+        `;
+      }).join('');
+    }
 
-            // 月 (1〜12)
-            for (let m = 1; m <= 12; m++) {
-                const opt = document.createElement('option');
-                opt.value = m;
-                opt.textContent = `${m}月`;
-                if (m === defaultMonth) opt.selected = true;
-                monthSel.appendChild(opt);
-            }
+    // =========================================================
+    // 4. 個人鑑定の実行・表示
+    // =========================================================
+    function runPersonalDiagnosis() {
+      const y = parseInt(document.getElementById('p-year').value, 10);
+      const m = parseInt(document.getElementById('p-month').value, 10);
+      const d = parseInt(document.getElementById('p-day').value, 10);
 
-            // 日数の動的更新関数
-            function updateDays() {
-                const y = parseInt(yearSel.value, 10);
-                const m = parseInt(monthSel.value, 10);
-                const currentDay = parseInt(daySel.value, 10) || defaultDay;
-                const maxDays = new Date(y, m, 0).getDate();
+      const res = calculateRokusei(y, m, d);
+      const starData = STARS_INFO[res.starName];
 
-                daySel.innerHTML = '';
-                for (let d = 1; d <= maxDays; d++) {
-                    const opt = document.createElement('option');
-                    opt.value = d;
-                    opt.textContent = `${d}日`;
-                    if (d === Math.min(currentDay, maxDays)) opt.selected = true;
-                    daySel.appendChild(opt);
-                }
-            }
+      document.getElementById('res-eto').textContent = `${res.etoName}年・${res.polarityLabel}`;
+      document.getElementById('res-star-name').textContent = res.fullStar;
+      document.getElementById('res-formula').textContent = `運命数：${res.unmeisu} ＋ 生まれ日：${d} － 1 ＝ 星数：${res.seisu}`;
+      document.getElementById('res-catch').textContent = starData.catch;
+      document.getElementById('res-personality').textContent = starData.personality;
 
-            yearSel.addEventListener('change', updateDays);
-            monthSel.addEventListener('change', updateDays);
-            updateDays();
-        }
+      // 2026年の運気
+      const idx2026 = getYearCycleIndex(res.starName, res.isPlus, 2026);
+      const cycle2026 = CYCLE_12[idx2026];
+      document.getElementById('res-2026-luck').textContent = cycle2026.name;
+      document.getElementById('res-2026-desc').textContent = cycle2026.desc;
 
-        // 12年運命周期マスター表の描画
-        function renderMasterCycleTable() {
-            const tbody = document.getElementById('master-cycle-tbody');
-            tbody.innerHTML = '';
+      const tagEl = document.getElementById('res-2026-tag');
+      tagEl.textContent = cycle2026.label;
+      tagEl.className = 'luck-tag ' + (cycle2026.type === 'daisatsukai' ? 'satsukai' : (cycle2026.type === 'satsukai' ? 'caution' : 'good'));
 
-            CYCLE_DATA.forEach((item, idx) => {
-                const tr = document.createElement('tr');
-                const isBigSakkai = item.type === 'sakkai-big';
-                const isOtherSakkai = item.type === 'sakkai-small' || item.type === 'sakkai-mid';
+      // 12年運気年表（2024〜2035）
+      const tbody = document.getElementById('res-timeline-body');
+      let rowsHtml = '';
+      for (let yr = 2024; yr <= 2035; yr++) {
+        const cIdx = getYearCycleIndex(res.starName, res.isPlus, yr);
+        const cObj = CYCLE_12[cIdx];
 
-                if (isBigSakkai) {
-                    tr.className = 'bg-shu-100/50 hover:bg-shu-100/80 transition';
-                } else if (isOtherSakkai) {
-                    tr.className = 'bg-amber-50/70 hover:bg-amber-50 transition';
-                } else {
-                    tr.className = 'hover:bg-washi-base/70 transition';
-                }
+        let trClass = '';
+        if (cObj.type === 'daisatsukai') trClass = 'row-daisatsukai';
+        else if (yr === 2026) trClass = 'row-current';
 
-                tr.innerHTML = `
-                    <td class="py-3 px-3 text-center font-mincho font-bold text-sumi-700">${idx + 1}</td>
-                    <td class="py-3 px-4">
-                        <span class="font-mincho font-extrabold text-base ${isBigSakkai ? 'text-shu-700' : 'text-sumi-900'}">${item.name}</span>
-                        <span class="block text-xs text-sumi-500">（${item.reading}）</span>
-                    </td>
-                    <td class="py-3 px-3 text-xs sm:text-sm font-mincho text-sumi-700">${item.season}</td>
-                    <td class="py-3 px-3 text-xs sm:text-sm text-kin-500 tracking-wider">${item.stars}</td>
-                    <td class="py-3 px-4 text-xs sm:text-sm text-sumi-700 leading-relaxed">
-                        <span class="font-bold ${isBigSakkai ? 'text-shu-700' : 'text-sumi-900'}">${item.shortNote}</span><br>
-                        <span class="text-sumi-600">${item.advice}</span>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
+        let badgeClass = 'badge-good';
+        if (cObj.type === 'daisatsukai') badgeClass = 'badge-daisatsukai';
+        else if (cObj.type === 'satsukai') badgeClass = 'badge-satsukai';
 
-        // ============================================================
-        // 4. タブ切り替え処理
-        // ============================================================
+        const currentMark = yr === 2026 ? ' <span style="color:var(--vermilion); font-size:0.8rem;">【今年】</span>' : '';
 
-        function switchTab(tabName) {
-            const tabs = ['personal', 'cycle', 'compatibility'];
-            tabs.forEach(t => {
-                const btn = document.getElementById(`tab-${t}`);
-                const panel = document.getElementById(`panel-${t}`);
-                if (t === tabName) {
-                    btn.classList.add('active');
-                    panel.classList.remove('hidden');
-                } else {
-                    btn.classList.remove('active');
-                    panel.classList.add('hidden');
-                }
-            });
-        }
+        rowsHtml += `
+          <tr class="${trClass}">
+            <td>${yr}年（${toWareki(yr)}）${currentMark}</td>
+            <td><strong>${cObj.name}</strong></td>
+            <td><span class="badge-mini ${badgeClass}">${cObj.label}</span></td>
+            <td>${cObj.short}</td>
+          </tr>
+        `;
+      }
+      tbody.innerHTML = rowsHtml;
 
-        // ============================================================
-        // 5. 個人鑑定の実行と結果表示
-        // ============================================================
+      document.getElementById('personal-result').classList.add('show');
+    }
 
-        function runPersonalFortune() {
-            const year = parseInt(document.getElementById('p-year').value, 10);
-            const month = parseInt(document.getElementById('p-month').value, 10);
-            const day = parseInt(document.getElementById('p-day').value, 10);
+    // =========================================================
+    // 5. 相性占いの実行・表示
+    // =========================================================
+    function runCompatibilityDiagnosis() {
+      const y1 = parseInt(document.getElementById('c1-year').value, 10);
+      const m1 = parseInt(document.getElementById('c1-month').value, 10);
+      const d1 = parseInt(document.getElementById('c1-day').value, 10);
 
-            const res = calculateRokusei(year, month, day);
-            const starInfo = STAR_DATA[res.baseStar];
-            const cycle2026 = CYCLE_DATA[res.cycle2026Index];
+      const y2 = parseInt(document.getElementById('c2-year').value, 10);
+      const m2 = parseInt(document.getElementById('c2-month').value, 10);
+      const d2 = parseInt(document.getElementById('c2-day').value, 10);
 
-            // 基本情報表示
-            document.getElementById('res-birth-text').textContent = `生年月日：${year}年${month}月${day}日生まれ（星数：${res.hoshisu}）`;
-            document.getElementById('res-star-name').textContent = res.fullStarName;
-            document.getElementById('res-zodiac-badge').textContent = `${res.zodiacName}年・${res.polarity === '＋' ? '陽' : '陰'}`;
+      const p1 = calculateRokusei(y1, m1, d1);
+      const p2 = calculateRokusei(y2, m2, d2);
 
-            document.getElementById('res-star-desc').textContent = starInfo.desc;
-            document.getElementById('res-star-strength').textContent = starInfo.strength;
-            document.getElementById('res-star-caution').textContent = starInfo.caution;
+      const starOrder = ['土星人', '金星人', '火星人', '天王星人', '木星人', '水星人'];
+      const diff = Math.abs(starOrder.indexOf(p1.starName) - starOrder.indexOf(p2.starName));
+      const samePolarity = (p1.isPlus === p2.isPlus);
 
-            // 2026年の運気表示
-            document.getElementById('res-2026-cycle').textContent = cycle2026.name;
-            document.getElementById('res-2026-reading').textContent = `（${cycle2026.reading}）`;
-            document.getElementById('res-2026-summary').textContent = cycle2026.summary;
-            document.getElementById('res-2026-advice').textContent = cycle2026.advice;
+      let scoreText = '';
+      let summary = '';
+      let detail = '';
 
-            const badge = document.getElementById('res-2026-badge');
-            if (cycle2026.type === 'sakkai-big') {
-                badge.textContent = '⚠ 大殺界の期間中';
-                badge.className = 'text-xs sm:text-sm font-mincho font-bold px-3.5 py-1 rounded-full bg-shu-600 text-white';
-            } else if (cycle2026.type === 'sakkai-mid' || cycle2026.type === 'sakkai-small') {
-                badge.textContent = cycle2026.type === 'sakkai-mid' ? '注意：中殺界' : '注意：小殺界';
-                badge.className = 'text-xs sm:text-sm font-mincho font-bold px-3.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300';
-            } else if (cycle2026.type === 'best') {
-                badge.textContent = '✨ 大幸運期';
-                badge.className = 'text-xs sm:text-sm font-mincho font-bold px-3.5 py-1 rounded-full bg-kin-100 text-sumi-900 border border-kin-500';
-            } else {
-                badge.textContent = '◎ 好調・安定期';
-                badge.className = 'text-xs sm:text-sm font-mincho font-bold px-3.5 py-1 rounded-full bg-ai-100 text-ai-800 border border-ai-800/30';
-            }
+      if (p1.starName === p2.starName && samePolarity) {
+        scoreText = '★★★★☆（85点）';
+        summary = '価値観や行動ペースが驚くほど似通う「鏡のような関係」';
+        detail = `お二人とも同じ${p1.fullStar}同士のため、言葉にしなくても考えていることや好みが自然と理解し合えます。一緒にいて気疲れしない居心地の良さがありますが、運気の波（大殺界の時期など）もまったく同じタイミングで訪れるため、お互いに冷静な客観性を持つことが長続きの秘訣です。`;
+      } else if (diff === 1 || diff === 5) {
+        scoreText = '★★★★★（95点）';
+        summary = '互いの長所を引き出し合い、自然に支え合える「最高の好相性」';
+        detail = `${p1.fullStar}と${p2.fullStar}は、一方にない魅力をもう一方が補い合える理想的な組み合わせです。無理に合わせようとしなくても役割分担がスムーズに決まり、一緒にいることでお互いの運気や魅力がさらに高まります。公私ともに頼もしいパートナーとなれるでしょう。`;
+      } else if (diff === 2 || diff === 4) {
+        scoreText = '★★★★☆（80点）';
+        summary = '適度な刺激と尊敬が生まれる「成長し合える関係」';
+        detail = `${p1.fullStar}の視点と${p2.fullStar}の発想には心地よい違いがあり、一緒に過ごすことで新しい世界が広がります。最初はペースの違いに戸惑うことがあっても、互いの得意分野を認め合うことで、長く安定した信頼関係を築くことができます。`;
+      } else {
+        scoreText = samePolarity ? '★★★☆☆（72点）' : '★★★★☆（82点）';
+        summary = '正反対の魅力に惹かれ合う「ドラマチックな補完関係」';
+        detail = `${p1.fullStar}と${p2.fullStar}は性質やアプローチが異なるため、自分にないものを持つ相手として強く惹かれ合います。意見がぶつかったときは「相手は自分と違う星を持っている」と一歩引いて受け止めることで、最強の補完パートナーへと進化します。`;
+      }
 
-            // 12年運気年表（2024年〜2035年）の生成
-            const tbody = document.getElementById('res-12year-tbody');
-            tbody.innerHTML = '';
+      // 2026年の二人の運気バランス追記
+      const c1_2026 = CYCLE_12[getYearCycleIndex(p1.starName, p1.isPlus, 2026)];
+      const c2_2026 = CYCLE_12[getYearCycleIndex(p2.starName, p2.isPlus, 2026)];
+      detail += `\n\n【2026年の運気バランス】\nあなたは「${c1_2026.name}（${c1_2026.label}）」、お相手は「${c2_2026.name}（${c2_2026.label}）」の年にあたります。運気が好調な方が相手を優しくサポートすることで、二人の絆がいっそう深まります。`;
 
-            for (let targetYear = 2024; targetYear <= 2035; targetYear++) {
-                const diff = targetYear - BASE_YEAR;
-                const cIdx = ((res.cycle2026Index + diff) % 12 + 12) % 12;
-                const cData = CYCLE_DATA[cIdx];
-                const age = targetYear - year;
-                const isCurrent = targetYear === BASE_YEAR;
-                const isBigSakkai = cData.type === 'sakkai-big';
+      document.getElementById('compat-pair-title').textContent = `${p1.fullStar} × ${p2.fullStar}`;
+      document.getElementById('compat-score').textContent = scoreText;
+      document.getElementById('compat-summary').textContent = summary;
+      document.getElementById('compat-detail').innerHTML = detail.replace(/\n/g, '<br>');
 
-                const tr = document.createElement('tr');
-                if (isCurrent) {
-                    tr.className = 'bg-kin-100/80 font-bold border-y-2 border-kin-500';
-                } else if (isBigSakkai) {
-                    tr.className = 'bg-shu-100/45';
-                } else {
-                    tr.className = 'hover:bg-washi-base/50';
-                }
+      document.getElementById('compat-result').classList.add('show');
+    }
 
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-mincho whitespace-nowrap">
-                        ${targetYear}年 <span class="text-xs text-sumi-500 font-sans">(${age >= 0 ? age + '歳' : '-'})</span>
-                        ${isCurrent ? '<span class="ml-1.5 inline-block text-[10px] bg-ai-800 text-white px-1.5 py-0.5 rounded">今年</span>' : ''}
-                    </td>
-                    <td class="py-3 px-4 font-mincho font-extrabold text-base ${isBigSakkai ? 'text-shu-700' : 'text-sumi-900'} whitespace-nowrap">
-                        ${cData.name} <span class="text-xs font-normal text-sumi-500">(${cData.reading})</span>
-                    </td>
-                    <td class="py-3 px-4 text-xs text-kin-500 whitespace-nowrap">${cData.stars}</td>
-                    <td class="py-3 px-4 text-xs sm:text-sm ${isBigSakkai ? 'text-shu-700 font-medium' : 'text-sumi-700'}">
-                        ${cData.shortNote}
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            }
+    // =========================================================
+    // 6. イベント登録・初期起動
+    // =========================================================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
 
-            const resultBox = document.getElementById('personal-result');
-            resultBox.classList.remove('hidden');
-            resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
+    populateDateSelectors('p-year', 'p-month', 'p-day', 1961, 6, 30);
+    populateDateSelectors('c1-year', 'c1-month', 'c1-day', 1961, 6, 30);
+    populateDateSelectors('c2-year', 'c2-month', 'c2-day', 1965, 4, 15);
+    renderMasterCycleTable();
 
-        // ============================================================
-        // 6. 相性占いの実行と結果表示
-        // ============================================================
-
-        function getCompatibilityAnalysis(p1, p2) {
-            const s1 = p1.baseStar;
-            const s2 = p2.baseStar;
-            const sameStar = s1 === s2;
-            const samePolarity = p1.polarity === p2.polarity;
-
-            // 相生（支え合い・高め合う組み合わせ）のペア定義
-            const harmoniousPairs = [
-                ['土星人', '火星人'],
-                ['金星人', '水星人'],
-                ['天王星人', '木星人'],
-                ['土星人', '天王星人'],
-                ['金星人', '火星人'],
-                ['木星人', '水星人']
-            ];
-
-            const isHarmonious = harmoniousPairs.some(
-                pair => (pair[0] === s1 && pair[1] === s2) || (pair[1] === s1 && pair[0] === s2)
-            );
-
-            let rankStars = '';
-            let title = '';
-            let desc = '';
-            let advice = '';
-
-            if (sameStar && !samePolarity) {
-                rankStars = '★★★★★';
-                title = '鏡のように理解し合える「運命の補完パートナー」';
-                desc = `お二人は同じ「${s1}」でありながら、陰陽（＋と－）が対になる理想的な組み合わせです。根本的な価値観や感覚が似ているため一緒にいて安心感があり、なおかつ自分にない部分を相手が自然と補ってくれます。`;
-                advice = '言葉にしなくても通じ合える部分が多いですが、親しき仲にも礼儀あり。感謝の気持ちをこまめに言葉にして伝えることで、一生モノの深い絆が育ちます。';
-            } else if (sameStar && samePolarity) {
-                rankStars = '★★★★☆';
-                title = '阿吽の呼吸で歩める「ソウルメイト的相性」';
-                desc = `まったく同じ「${p1.fullStarName}」同士のお二人は、行動パターンや物事の捉え方が驚くほど似ています。初対面から意気投合しやすく、同じ目標に向かってタッグを組むと大きな力を発揮します。`;
-                advice = '似ているがゆえに、同じ弱点が出たり意地を張り合ったりすることも。意見がぶつかったときは「自分を見ているようだ」と一歩引いて笑い合えると最高です。';
-            } else if (isHarmonious) {
-                rankStars = '★★★★★';
-                title = '互いの魅力を引き出し合う「発展・相生の好相性」';
-                desc = `「${s1}」の堅実さや独自の視点と、「${s2}」の行動力や包容力が絶妙なバランスで噛み合う組み合わせです。一緒に過ごすことで視野が広がり、一人では成し遂げられない豊かな実りを得ることができます。`;
-                advice = 'お互いの「違い」を面白がり、尊重することが開運の鍵です。相手の得意分野を信頼して任せることで、二人の運気が相乗効果で高まっていきます。';
-            } else {
-                rankStars = '★★★☆☆';
-                title = '新しい世界を教えてくれる「刺激と学びの相性」';
-                desc = `「${s1}」と「${s2}」は、もともと異なるリズムや価値観を持つ星同士です。最初は相手の考え方に驚くこともあるかもしれませんが、それこそが自分にない新しい視点や成長をもたらしてくれる大切なご縁です。`;
-                advice = '「自分と同じ感覚で動いてくれるはず」という思い込みを手放し、適度な距離感とルールを話し合うことで、非常に頼もしいパートナーシップを築けます。';
-            }
-
-            // 現在の運気バランス（どちらかが大殺界の場合のフォロー）
-            const c1 = CYCLE_DATA[p1.cycle2026Index];
-            const c2 = CYCLE_DATA[p2.cycle2026Index];
-            if (c1.type === 'sakkai-big' && c2.type !== 'sakkai-big') {
-                advice += ` なお、2026年はあなたが「${c1.name}（大殺界）」、お相手が好調な「${c2.name}」の年ですので、お相手の意見やサポートに素直に頼ると運気が安定します。`;
-            } else if (c2.type === 'sakkai-big' && c1.type !== 'sakkai-big') {
-                advice += ` なお、2026年はお相手が「${c2.name}（大殺界）」の時期にあたります。あなたが大きな器でお相手を優しく見守り、支えてあげることで二人の絆がより一層深まります。`;
-            }
-
-            return { rankStars, title, desc, advice };
-        }
-
-        function runCompatibilityFortune() {
-            const y1 = parseInt(document.getElementById('c1-year').value, 10);
-            const m1 = parseInt(document.getElementById('c1-month').value, 10);
-            const d1 = parseInt(document.getElementById('c1-day').value, 10);
-
-            const y2 = parseInt(document.getElementById('c2-year').value, 10);
-            const m2 = parseInt(document.getElementById('c2-month').value, 10);
-            const d2 = parseInt(document.getElementById('c2-day').value, 10);
-
-            const p1 = calculateRokusei(y1, m1, d1);
-            const p2 = calculateRokusei(y2, m2, d2);
-            const analysis = getCompatibilityAnalysis(p1, p2);
-
-            document.getElementById('comp-star1').textContent = p1.fullStarName;
-            document.getElementById('comp-cycle1').textContent = `2026年の運気：${CYCLE_DATA[p1.cycle2026Index].name}`;
-
-            document.getElementById('comp-star2').textContent = p2.fullStarName;
-            document.getElementById('comp-cycle2').textContent = `2026年の運気：${CYCLE_DATA[p2.cycle2026Index].name}`;
-
-            document.getElementById('comp-stars-rank').textContent = analysis.rankStars;
-            document.getElementById('comp-title').textContent = analysis.title;
-            document.getElementById('comp-desc').textContent = analysis.desc;
-            document.getElementById('comp-advice').textContent = analysis.advice;
-
-            const compResult = document.getElementById('comp-result');
-            compResult.classList.remove('hidden');
-            compResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        // ============================================================
-        // 7. ページ読み込み時の初期セットアップ
-        // ============================================================
-
-        window.addEventListener('DOMContentLoaded', () => {
-            populateDateSelectors('p-year', 'p-month', 'p-day', 1985, 6, 15);
-            populateDateSelectors('c1-year', 'c1-month', 'c1-day', 1985, 6, 15);
-            populateDateSelectors('c2-year', 'c2-month', 'c2-day', 1988, 10, 20);
-            renderMasterCycleTable();
-        });
-    </script>
+    document.getElementById('btn-diagnose').addEventListener('click', runPersonalDiagnosis);
+    document.getElementById('btn-compat').addEventListener('click', runCompatibilityDiagnosis);
+  </script>
 </body>
 </html>
