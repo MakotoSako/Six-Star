@@ -6,22 +6,22 @@
   <title>六星占術 運命鑑定書</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-washi: #f5f0e6;
       --bg-card: #fbf8f1;
       --bg-accent: #efe7d6;
       --ink-main: #231f1e;
-      --ink-sub: #5c534e;
-      --ink-muted: #8a7f78;
+      --ink-sub: #4f4742;
+      --ink-muted: #7d736c;
       --vermilion: #b83227;
       --vermilion-light: #f6e6e4;
       --indigo: #233b58;
       --indigo-light: #e5ebf2;
-      --gold: #a68236;
+      --gold: #9e792c;
       --gold-light: #f4eedf;
-      --border-color: #d6cbb8;
+      --border-color: #d4c8b4;
       --shadow-soft: 0 8px 24px rgba(35, 31, 30, 0.08);
     }
 
@@ -31,28 +31,36 @@
       padding: 0;
     }
 
+    html {
+      font-size: 17px;
+    }
+
+    @media (min-width: 640px) {
+      html {
+        font-size: 18px;
+      }
+    }
+
     body {
       font-family: 'Shippori Mincho', serif;
       background-color: var(--bg-washi);
       color: var(--ink-main);
-      line-height: 1.75;
+      line-height: 1.85;
       min-height: 100vh;
-      /* 和紙の繊維・質感テクスチャ */
       background-image:
         radial-gradient(rgba(166, 130, 54, 0.06) 1px, transparent 0),
         radial-gradient(rgba(35, 31, 30, 0.04) 1px, transparent 0),
         linear-gradient(180deg, rgba(255, 252, 245, 0.6) 0%, rgba(238, 229, 213, 0.6) 100%);
       background-size: 32px 32px, 19px 19px, 100% 100%;
       background-position: 0 0, 11px 13px, 0 0;
-      padding: 20px 14px 60px;
+      padding: 20px 12px 64px;
     }
 
     .container {
-      max-width: 860px;
+      max-width: 940px;
       margin: 0 auto;
     }
 
-    /* 外枠の和風二重線フレーム */
     .scroll-frame {
       background: var(--bg-card);
       border: 2px solid var(--border-color);
@@ -63,21 +71,20 @@
 
     .scroll-inner {
       border: 1px solid var(--border-color);
-      padding: 32px 24px;
+      padding: 28px 18px;
       position: relative;
     }
 
     @media (min-width: 640px) {
       .scroll-inner {
-        padding: 44px 42px;
+        padding: 46px 44px;
       }
     }
 
-    /* 四隅の飾り */
     .corner {
       position: absolute;
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       border-color: var(--vermilion);
       border-style: solid;
       opacity: 0.75;
@@ -87,7 +94,6 @@
     .corner.bl { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; }
     .corner.br { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
 
-    /* ヘッダー */
     header {
       text-align: center;
       margin-bottom: 30px;
@@ -100,27 +106,27 @@
       letter-spacing: 0.25em;
       color: var(--vermilion);
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 1.85rem;
       font-weight: 800;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.16em;
       color: var(--ink-main);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     @media (min-width: 640px) {
       h1 {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
       }
     }
 
     .header-desc {
-      font-size: 0.92rem;
+      font-size: 0.94rem;
       color: var(--ink-sub);
-      max-width: 560px;
+      max-width: 600px;
       margin: 0 auto;
     }
 
@@ -137,19 +143,20 @@
       background: var(--bg-accent);
       border: 1px solid var(--border-color);
       color: var(--ink-sub);
-      padding: 12px 8px;
-      font-size: 0.92rem;
+      padding: 14px 6px;
+      font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
-      letter-spacing: 0.06em;
-      border-radius: 2px;
+      letter-spacing: 0.05em;
+      border-radius: 3px;
+      white-space: nowrap;
     }
 
     @media (min-width: 640px) {
       .tab-btn {
-        font-size: 1.02rem;
-        padding: 14px 12px;
+        font-size: 1.05rem;
+        padding: 15px 12px;
       }
     }
 
@@ -167,7 +174,7 @@
 
     .tab-panel {
       display: none;
-      animation: fadeIn 0.35s ease;
+      animation: fadeIn 0.3s ease;
     }
 
     .tab-panel.active {
@@ -175,26 +182,27 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(5px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 入力フォームエリア */
+    /* 入力ボックスとプルダウン（大きく押しやすく整列） */
     .input-box {
       background: var(--bg-accent);
       border: 1px solid var(--border-color);
-      padding: 22px 20px;
-      margin-bottom: 26px;
+      padding: 26px 18px;
+      margin-bottom: 28px;
       text-align: center;
+      border-radius: 3px;
     }
 
     .input-label {
       display: block;
       font-weight: 700;
-      font-size: 1.05rem;
-      margin-bottom: 14px;
+      font-size: 1.08rem;
+      margin-bottom: 16px;
       color: var(--ink-main);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
     }
 
     .date-selects {
@@ -202,20 +210,37 @@
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .date-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
     }
 
     select {
       font-family: 'Shippori Mincho', serif;
-      font-size: 1.05rem;
-      padding: 9px 12px;
-      border: 1px solid var(--border-color);
+      font-size: 1rem;
+      height: 48px;
+      padding: 0 12px;
+      border: 1.5px solid #c5b7a0;
       background: #fffdf9;
       color: var(--ink-main);
-      border-radius: 2px;
+      border-radius: 3px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 700;
+    }
+
+    select.sel-year {
+      min-width: 152px;
+    }
+
+    select.sel-md {
+      min-width: 64px;
+      text-align: center;
     }
 
     select:focus {
@@ -224,9 +249,9 @@
     }
 
     .date-unit {
-      font-size: 0.95rem;
+      font-size: 0.98rem;
+      font-weight: 600;
       color: var(--ink-sub);
-      margin-right: 4px;
     }
 
     .btn-primary {
@@ -234,13 +259,13 @@
       background: var(--ink-main);
       color: #fffdf9;
       border: 1px solid var(--ink-main);
-      padding: 12px 34px;
-      font-size: 1.05rem;
+      padding: 14px 40px;
+      font-size: 1.06rem;
       font-weight: 700;
       letter-spacing: 0.14em;
       cursor: pointer;
       transition: all 0.2s ease;
-      border-radius: 2px;
+      border-radius: 3px;
     }
 
     .btn-primary:hover {
@@ -248,36 +273,44 @@
       border-color: var(--vermilion);
     }
 
-    /* 鑑定結果カード */
     .result-area {
       display: none;
     }
 
     .result-area.show {
       display: block;
-      animation: fadeIn 0.4s ease;
+      animation: fadeIn 0.35s ease;
     }
 
+    /* 鑑定結果ヘッダーカード */
     .star-header-card {
       border: 1px solid var(--border-color);
       background: #fffdf9;
-      padding: 26px 20px;
+      padding: 28px 20px;
       text-align: center;
-      position: relative;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      border-radius: 3px;
+    }
+
+    .meta-badges {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 14px;
     }
 
     .hanko-stamp {
-      display: inline-block;
-      border: 2px solid var(--vermilion);
+      display: inline-flex;
+      align-items: center;
+      height: 32px;
+      border: 1.5px solid var(--vermilion);
       color: var(--vermilion);
-      font-weight: 800;
-      padding: 3px 10px;
-      font-size: 0.85rem;
-      letter-spacing: 0.12em;
-      margin-bottom: 10px;
+      font-weight: 700;
+      padding: 0 14px;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
       border-radius: 2px;
-      transform: rotate(-1.5deg);
+      background: #fff;
     }
 
     .star-title {
@@ -285,56 +318,57 @@
       font-weight: 800;
       color: var(--ink-main);
       letter-spacing: 0.1em;
-      margin-bottom: 6px;
+      line-height: 1.3;
+      margin-bottom: 8px;
     }
 
     @media (min-width: 640px) {
       .star-title {
-        font-size: 2.4rem;
+        font-size: 2.35rem;
       }
     }
 
     .star-formula {
       font-size: 0.88rem;
       color: var(--ink-muted);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .star-catch {
       display: inline-block;
       background: var(--gold-light);
       color: #6b5018;
-      padding: 6px 16px;
+      padding: 8px 20px;
       font-weight: 700;
-      font-size: 0.95rem;
-      border-radius: 2px;
+      font-size: 0.98rem;
+      border-radius: 3px;
     }
 
-    /* セクション見出し */
     .sec-heading {
-      font-size: 1.22rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--ink-main);
       border-left: 4px solid var(--vermilion);
       padding-left: 12px;
-      margin: 28px 0 14px;
+      margin: 30px 0 14px;
       letter-spacing: 0.06em;
     }
 
     .info-box {
       background: #fffdf9;
       border: 1px solid var(--border-color);
-      padding: 18px 20px;
-      margin-bottom: 18px;
-      font-size: 0.96rem;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      border-radius: 3px;
     }
 
-    /* 今年の運気ハイライト */
     .this-year-box {
       border: 1px solid var(--border-color);
       background: #fffdf9;
-      padding: 20px;
-      margin-bottom: 22px;
+      padding: 22px;
+      margin-bottom: 24px;
+      border-radius: 3px;
     }
 
     .this-year-top {
@@ -342,18 +376,19 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 12px;
-      margin-bottom: 12px;
-      padding-bottom: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
       border-bottom: 1px dashed var(--border-color);
     }
 
     .year-badge {
       background: var(--indigo);
       color: #fff;
-      padding: 4px 12px;
-      font-size: 0.88rem;
+      padding: 5px 14px;
+      font-size: 0.9rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
+      border-radius: 2px;
     }
 
     .luck-name {
@@ -363,9 +398,9 @@
     }
 
     .luck-tag {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 700;
-      padding: 3px 10px;
+      padding: 4px 12px;
       border-radius: 2px;
     }
 
@@ -387,31 +422,34 @@
       border: 1px solid #e0a8a3;
     }
 
-    /* テーブル共通 */
+    /* テーブル・周期表の見やすさ強化 */
     .table-wrap {
       overflow-x: auto;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       border: 1px solid var(--border-color);
       background: #fffdf9;
+      border-radius: 3px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.92rem;
-      min-width: 520px;
+      font-size: 0.95rem;
+      min-width: 580px;
     }
 
     th, td {
-      padding: 11px 12px;
+      padding: 14px 14px;
       border-bottom: 1px solid var(--border-color);
       text-align: left;
-      vertical-align: top;
+      vertical-align: middle;
+      line-height: 1.65;
     }
 
     th {
       background: var(--bg-accent);
       font-weight: 700;
+      font-size: 0.96rem;
       color: var(--ink-main);
       white-space: nowrap;
       border-bottom: 2px solid var(--border-color);
@@ -426,10 +464,16 @@
       background: #fbf3f2;
     }
 
+    .luck-cell-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
     .badge-mini {
       display: inline-block;
-      font-size: 0.76rem;
-      padding: 2px 7px;
+      font-size: 0.82rem;
+      padding: 3px 9px;
       font-weight: 700;
       border-radius: 2px;
       white-space: nowrap;
@@ -450,20 +494,15 @@
       color: #fff;
     }
 
-    .badge-normal {
-      background: #e6dfd3;
-      color: var(--ink-sub);
-    }
-
-    /* 相性占いレイアウト */
+    /* 相性占いレイアウト（広い画面では横並び、狭い画面では縦積みでゆったり表示） */
     .compat-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 16px;
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
 
-    @media (min-width: 680px) {
+    @media (min-width: 820px) {
       .compat-grid {
         grid-template-columns: 1fr 1fr;
       }
@@ -472,49 +511,53 @@
     .person-card {
       background: #fffdf9;
       border: 1px solid var(--border-color);
-      padding: 16px;
+      padding: 18px 12px;
       text-align: center;
+      border-radius: 3px;
     }
 
     .person-label {
-      font-size: 0.88rem;
+      font-size: 0.96rem;
       font-weight: 700;
       color: var(--vermilion);
-      margin-bottom: 10px;
-      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      letter-spacing: 0.08em;
     }
 
     .compat-result-card {
       background: #fffdf9;
       border: 1px solid var(--border-color);
-      padding: 24px 20px;
+      padding: 26px 22px;
       text-align: center;
+      border-radius: 3px;
     }
 
     .compat-pair {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       color: var(--ink-main);
+      line-height: 1.5;
     }
 
     .compat-score-box {
       display: inline-block;
       border: 2px solid var(--vermilion);
-      padding: 10px 26px;
-      margin-bottom: 16px;
+      padding: 12px 28px;
+      margin-bottom: 18px;
       background: var(--vermilion-light);
+      border-radius: 3px;
     }
 
     .compat-score-label {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       color: var(--vermilion);
       font-weight: 700;
       display: block;
     }
 
     .compat-score-val {
-      font-size: 1.7rem;
+      font-size: 1.65rem;
       font-weight: 800;
       color: var(--vermilion);
       letter-spacing: 0.08em;
@@ -522,17 +565,17 @@
 
     .compat-desc {
       text-align: left;
-      font-size: 0.96rem;
-      line-height: 1.8;
+      font-size: 1rem;
+      line-height: 1.85;
       border-top: 1px dashed var(--border-color);
-      padding-top: 16px;
-      margin-top: 8px;
+      padding-top: 18px;
+      margin-top: 10px;
     }
 
     footer {
       text-align: center;
-      margin-top: 32px;
-      font-size: 0.8rem;
+      margin-top: 34px;
+      font-size: 0.84rem;
       color: var(--ink-muted);
     }
   </style>
@@ -564,19 +607,21 @@
           <div class="input-box">
             <label class="input-label">あなたの生年月日を選択してください</label>
             <div class="date-selects">
-              <select id="p-year" aria-label="生年"></select><span class="date-unit">年</span>
-              <select id="p-month" aria-label="生月"></select><span class="date-unit">月</span>
-              <select id="p-day" aria-label="生日"></select><span class="date-unit">日</span>
+              <span class="date-group"><select id="p-year" class="sel-year" aria-label="生年"></select><span class="date-unit">年</span></span>
+              <span class="date-group"><select id="p-month" class="sel-md" aria-label="生月"></select><span class="date-unit">月</span></span>
+              <span class="date-group"><select id="p-day" class="sel-md" aria-label="生日"></select><span class="date-unit">日</span></span>
             </div>
             <button id="btn-diagnose" class="btn-primary">運命を鑑定する</button>
           </div>
 
           <div id="personal-result" class="result-area">
             <div class="star-header-card">
-              <div id="res-eto" class="hanko-stamp">丑年・陰（－）</div>
-              <div id="res-star-name" class="star-title">金星人（－）</div>
-              <div id="res-formula" class="star-formula">運命数：15 ／ 星数：44</div>
-              <div id="res-catch" class="star-catch">自由奔放で行動力あふれる現実派</div>
+              <div class="meta-badges">
+                <span id="res-eto" class="hanko-stamp"></span>
+              </div>
+              <div id="res-star-name" class="star-title"></div>
+              <div id="res-formula" class="star-formula"></div>
+              <div id="res-catch" class="star-catch"></div>
             </div>
 
             <h2 class="sec-heading">基本性格と特徴</h2>
@@ -586,14 +631,14 @@
             <div class="this-year-box">
               <div class="this-year-top">
                 <span class="year-badge">2026年（令和8年）</span>
-                <span id="res-2026-luck" class="luck-name">安定</span>
-                <span id="res-2026-tag" class="luck-tag good">収穫の集大成</span>
+                <span id="res-2026-luck" class="luck-name"></span>
+                <span id="res-2026-tag" class="luck-tag good"></span>
               </div>
               <p id="res-2026-desc"></p>
             </div>
 
             <h2 class="sec-heading">あなたの12年運気年表（2024年〜2035年）</h2>
-            <p style="font-size:0.88rem; color:var(--ink-sub); margin-bottom:10px;">
+            <p style="font-size:0.9rem; color:var(--ink-sub); margin-bottom:12px;">
               ※赤く強調されている3年間（陰影・停止・減退）が「大殺界」にあたります。
             </p>
             <div class="table-wrap">
@@ -615,7 +660,7 @@
         <!-- タブ2：12年周期表 -->
         <section id="tab-cycle" class="tab-panel">
           <h2 class="sec-heading" style="margin-top:0;">運命周期・12のサイクル一覧</h2>
-          <p style="font-size:0.93rem; color:var(--ink-sub); margin-bottom:16px;">
+          <p style="font-size:0.96rem; color:var(--ink-sub); margin-bottom:18px;">
             六星占術では、すべての人の運気が「種子」から「減退」までの12年周期（12ヶ月・12日周期も同様）で巡ると考えます。季節の移り変わりのように、種をまき、育て、収穫し、冬眠して次の春に備えます。
           </p>
           <div class="table-wrap">
@@ -633,8 +678,8 @@
           </div>
 
           <div class="info-box" style="background: var(--vermilion-light); border-color: #e0a8a3;">
-            <strong style="color: var(--vermilion); display:block; margin-bottom:6px;">■ 「大殺界（陰影・停止・減退）」の心得</strong>
-            12年周期の最後の3年間は運気の「真冬」にあたり、新しいこと（結婚・転職・引っ越し・起業・大きな買い物など）を始めるとトラブルや空回りを招きやすいとされます。この時期は無理に動かず、読書や勉強、健康管理、周囲への奉仕など「充電と内省」に充てることで、次の「種子」の年に大きく花開きます。
+            <strong style="color: var(--vermilion); display:block; margin-bottom:8px;">■ 「大殺界（陰影・停止・減退）」の心得</strong>
+            12年周期の最後の3年間は運気の「真冬」にあたり、新しいこと（結婚・転職・引っ越し・起業・大きな買い物など）を始めるとトラブルを招きやすいとされます。読書や勉強、健康管理、周囲への奉仕など「充電と内省」に充てることで、次の「種子」の年に大きく花開きます。
           </div>
         </section>
 
@@ -645,17 +690,17 @@
               <div class="person-card">
                 <div class="person-label">【 あなた 】の生年月日</div>
                 <div class="date-selects" style="margin-bottom:0;">
-                  <select id="c1-year"></select><span class="date-unit">年</span>
-                  <select id="c1-month"></select><span class="date-unit">月</span>
-                  <select id="c1-day"></select><span class="date-unit">日</span>
+                  <span class="date-group"><select id="c1-year" class="sel-year"></select><span class="date-unit">年</span></span>
+                  <span class="date-group"><select id="c1-month" class="sel-md"></select><span class="date-unit">月</span></span>
+                  <span class="date-group"><select id="c1-day" class="sel-md"></select><span class="date-unit">日</span></span>
                 </div>
               </div>
               <div class="person-card">
                 <div class="person-label">【 お相手 】の生年月日</div>
                 <div class="date-selects" style="margin-bottom:0;">
-                  <select id="c2-year"></select><span class="date-unit">年</span>
-                  <select id="c2-month"></select><span class="date-unit">月</span>
-                  <select id="c2-day"></select><span class="date-unit">日</span>
+                  <span class="date-group"><select id="c2-year" class="sel-year"></select><span class="date-unit">年</span></span>
+                  <span class="date-group"><select id="c2-month" class="sel-md"></select><span class="date-unit">月</span></span>
+                  <span class="date-group"><select id="c2-day" class="sel-md"></select><span class="date-unit">日</span></span>
                 </div>
               </div>
             </div>
@@ -664,14 +709,12 @@
 
           <div id="compat-result" class="result-area">
             <div class="compat-result-card">
-              <div id="compat-pair-title" class="compat-pair">金星人（－） × 土星人（＋）</div>
+              <div id="compat-pair-title" class="compat-pair"></div>
               <div class="compat-score-box">
                 <span class="compat-score-label">総合相性度</span>
-                <span id="compat-score" class="compat-score-val">★★★★☆（85点）</span>
+                <span id="compat-score" class="compat-score-val"></span>
               </div>
-              <div id="compat-summary" style="font-weight:700; color:var(--indigo); margin-bottom:10px;">
-                互いの違いが刺激になる好バランスな関係
-              </div>
+              <div id="compat-summary" style="font-weight:700; font-size:1.05rem; color:var(--indigo); margin-bottom:12px;"></div>
               <div id="compat-detail" class="compat-desc"></div>
             </div>
           </div>
@@ -685,41 +728,38 @@
   </div>
 
   <script>
-    // =========================================================
-    // 1. マスターデータ定義
-    // =========================================================
     const ETO_LIST = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 
     const STARS_INFO = {
       '土星人': {
         catch: '理想と正義感を貫く完璧主義者',
         personality: '真面目で責任感が強く、高い理想に向かってコツコツと努力を積み重ねるタイプです。曲がったことが嫌いな正義感の持ち主ですが、自分の信念を曲げない頑固さや、少し融通が利かない一面もあります。家庭や伝統を大切にし、信頼を裏切らない誠実さが最大の魅力です。',
-        baseIndex: 0 // 種子となる干支インデックス基準（子=0）
+        baseIndex: 0
       },
       '金星人': {
         catch: '自由奔放で行動力あふれる現実派',
         personality: '明るく社交的で、思い立ったらすぐに行動するスピード感とフットワークの軽さを持っています。新しい情報やトレンドに敏感で、合理的な判断が得意です。束縛を嫌う自由人ゆえに熱しやすく冷めやすい傾向もありますが、その屈託のない明るさで周囲を惹きつけます。',
-        baseIndex: 10 // 戌=10
+        baseIndex: 10
       },
       '火星人': {
         catch: '独自の美学を持つミステリアスな芸術家肌',
         personality: 'プライドが高く、自分の世界観やこだわりを大切にする独創的なタイプです。初対面では人見知りをしてクールに見られがちですが、一度心を許した相手や身内には深い愛情と情熱を注ぎます。他人に流されない強い芯と鋭い直感力を備えています。',
-        baseIndex: 8 // 申=8
+        baseIndex: 8
       },
       '天王星人': {
         catch: '愛情深く人を惹きつけるロマンチスト',
         personality: '優しく穏やかで、誰とでもすぐに打ち解けられる温かい人柄の持ち主です。寂しがり屋で人と関わることが大好きなため、周囲にはいつも人が集まります。情に厚い分、決断を先延ばしにしたり優柔不断になったりしやすい面もありますが、持ち前の愛嬌で困難を乗り切ります。',
-        baseIndex: 6 // 午=6
+        baseIndex: 6
       },
       '木星人': {
         catch: '堅実な努力で信頼を築く大器晩成型',
         personality: '控えめで礼儀正しく、ルールや秩序を重んじる堅実派です。派手な冒険よりも確実な道を選び、忍耐強く物事を成し遂げる力を持っています。若い頃は苦労することもありますが、年齢を重ねるごとに実力と人望が開花する大器晩成の星です。',
-        baseIndex: 4 // 辰=4
+        baseIndex: 4
       },
       '水星人': {
         catch: 'クールな知性と商才を備えた独立独歩の星',
         personality: '冷静沈着で状況判断に優れ、経済観念やビジネスのセンス（商才）に恵まれたタイプです。独立心が旺盛で、人に頼らず自分の力で道を切り開く強さを持っています。一見ドライでマイペースに見えますが、親しい人への面倒見はとても良い一面があります。',
-        baseIndex: 2 // 寅=2
+        baseIndex: 2
       }
     };
 
@@ -738,47 +778,42 @@
       { name: '減退', type: 'daisatsukai', label: '大殺界（3年目）', short: '大殺界の最終年・春を待つ準備期間', desc: '冬の終わりが近づき少しずつ気が緩みやすい時期ですが、まだ大殺界の渦中です。フライングして動き出さず、翌年の「種子」に向けた計画づくりに充てましょう。' }
     ];
 
-    // =========================================================
-    // 2. 正確な六星占術 算出ロジック
-    // =========================================================
-    /**
-     * 1900年1月1日を基準とした通算日数を計算し、
-     * 60干支サイクルから正確な「運命数（1〜60）」を算出する。
-     */
     function getUnmeisu(year, month) {
-      // 1900年1月1日からの経過日数を算出（協定世界時ベースで時差ズレ防止）
-      const baseUtc = Date.UTC(1900, 0, 1);
+      const refUtc = Date.UTC(1961, 5, 1);
       const targetUtc = Date.UTC(year, month - 1, 1);
-      const diffDays = Math.floor((targetUtc - baseUtc) / (1000 * 60 * 60 * 24));
-      // 1900年1月の基準オフセット（1961年6月＝15 と一致する60周期）
-      const num = ((diffDays + 34) % 60 + 60) % 60;
-      return num === 0 ? 60 : num;
+      const diffDays = Math.round((targetUtc - refUtc) / (1000 * 60 * 60 * 24));
+      const idx0to59 = ((14 + diffDays) % 60 + 60) % 60;
+      return idx0to59 + 1;
+    }
+
+    function getYearCycleIndex(starName, isPlus, targetYear) {
+      const targetEtoIndex = ((targetYear - 4) % 12 + 12) % 12;
+      let seedEtoIndex = STARS_INFO[starName].baseIndex;
+      if (!isPlus) {
+        seedEtoIndex = (seedEtoIndex + 1) % 12;
+      }
+      return ((targetEtoIndex - seedEtoIndex) % 12 + 12) % 12;
     }
 
     function calculateRokusei(year, month, day) {
-      // 1. 運命数（1〜60）
       const unmeisu = getUnmeisu(year, month);
-
-      // 2. 星数（1〜60） = (運命数 + 生まれ日 - 1) を1〜60に正規化
       let seisu = (unmeisu + day - 1) % 60;
       if (seisu <= 0) seisu += 60;
 
-      // 3. 運命星の判定
       let starName = '';
       if (seisu >= 1 && seisu <= 10) starName = '土星人';
-      else if (seisu >= 11 && seisu <= 20) starName = '金星人';
+      else if (seisu >= 11 && seisu <= 20) starName = '水星人';
       else if (seisu >= 21 && seisu <= 30) starName = '火星人';
-      else if (seisu >= 31 && seisu <= 40) starName = '天王星人';
-      else if (seisu >= 41 && seisu <= 50) starName = '木星人';
-      else starName = '水星人';
+      else if (seisu >= 31 && seisu <= 40) starName = '木星人';
+      else if (seisu >= 41 && seisu <= 50) starName = '金星人';
+      else starName = '天王星人';
 
-      // 4. 干支とプラス（＋）／マイナス（－）の判定
-      // 西暦年を12で割った余り：4が子(0)、5が丑(1)...
       const etoIndex = ((year - 4) % 12 + 12) % 12;
       const etoName = ETO_LIST[etoIndex];
-      const isPlus = (etoIndex % 2 === 0); // 子(0),寅(2),辰(4),午(6),申(8),戌(10) が陽(＋)
+      const isPlus = (etoIndex % 2 === 0);
       const polarity = isPlus ? '＋' : '－';
       const polarityLabel = isPlus ? '陽（＋）' : '陰（－）';
+      const fullStar = `${starName}（${polarity}）`;
 
       return {
         unmeisu,
@@ -787,34 +822,25 @@
         etoName,
         polarity,
         polarityLabel,
-        fullStar: `${starName}（${polarity}）`,
-        isPlus
+        isPlus,
+        fullStar
       };
     }
 
-    /**
-     * 指定した西暦年の運気（CYCLE_12のインデックス 0〜11）を算出
-     */
-    function getYearCycleIndex(starName, isPlus, targetYear) {
-      const targetEtoIndex = ((targetYear - 4) % 12 + 12) % 12;
-      let seedEtoIndex = STARS_INFO[starName].baseIndex;
-      // マイナス（－）星人は、プラス（＋）星人より干支が1つ後ろ（＋1）の年に種子が巡る
-      if (!isPlus) {
-        seedEtoIndex = (seedEtoIndex + 1) % 12;
-      }
-      return ((targetEtoIndex - seedEtoIndex) % 12 + 12) % 12;
+    function toWarekiShort(year) {
+      if (year >= 2019) return `R${year - 2018}`;
+      if (year >= 1989) return `H${year - 1988}`;
+      if (year >= 1926) return `S${year - 1925}`;
+      return `T${year - 1911}`;
     }
 
-    function toWareki(year) {
+    function toWarekiFull(year) {
       if (year >= 2019) return `令和${year - 2018 === 1 ? '元' : year - 2018}年`;
       if (year >= 1989) return `平成${year - 1988 === 1 ? '元' : year - 1988}年`;
       if (year >= 1926) return `昭和${year - 1925 === 1 ? '元' : year - 1925}年`;
       return `大正${year - 1911}年`;
     }
 
-    // =========================================================
-    // 3. UI初期化・セレクトボックス生成
-    // =========================================================
     function populateDateSelectors(yId, mId, dId, defaultY, defaultM, defaultD) {
       const ySel = document.getElementById(yId);
       const mSel = document.getElementById(mId);
@@ -823,7 +849,7 @@
       for (let y = 1930; y <= 2026; y++) {
         const opt = document.createElement('option');
         opt.value = y;
-        opt.textContent = `${y}（${toWareki(y)}）`;
+        opt.textContent = `${y} (${toWarekiShort(y)})`;
         if (y === defaultY) opt.selected = true;
         ySel.appendChild(opt);
       }
@@ -856,7 +882,6 @@
       updateDays();
     }
 
-    // 12年周期マスターテーブルの描画
     function renderMasterCycleTable() {
       const tbody = document.getElementById('cycle-master-body');
       tbody.innerHTML = CYCLE_12.map((c, idx) => {
@@ -867,8 +892,8 @@
         const rowClass = c.type === 'daisatsukai' ? ' class="row-daisatsukai"' : '';
         return `
           <tr${rowClass}>
-            <td><strong>${idx + 1}</strong></td>
-            <td><strong>${c.name}</strong></td>
+            <td style="text-align:center;"><strong>${idx + 1}</strong></td>
+            <td class="luck-cell-name">${c.name}</td>
             <td><span class="badge-mini ${badgeClass}">${c.label}</span></td>
             <td>${c.desc}</td>
           </tr>
@@ -876,9 +901,6 @@
       }).join('');
     }
 
-    // =========================================================
-    // 4. 個人鑑定の実行・表示
-    // =========================================================
     function runPersonalDiagnosis() {
       const y = parseInt(document.getElementById('p-year').value, 10);
       const m = parseInt(document.getElementById('p-month').value, 10);
@@ -893,7 +915,6 @@
       document.getElementById('res-catch').textContent = starData.catch;
       document.getElementById('res-personality').textContent = starData.personality;
 
-      // 2026年の運気
       const idx2026 = getYearCycleIndex(res.starName, res.isPlus, 2026);
       const cycle2026 = CYCLE_12[idx2026];
       document.getElementById('res-2026-luck').textContent = cycle2026.name;
@@ -903,7 +924,6 @@
       tagEl.textContent = cycle2026.label;
       tagEl.className = 'luck-tag ' + (cycle2026.type === 'daisatsukai' ? 'satsukai' : (cycle2026.type === 'satsukai' ? 'caution' : 'good'));
 
-      // 12年運気年表（2024〜2035）
       const tbody = document.getElementById('res-timeline-body');
       let rowsHtml = '';
       for (let yr = 2024; yr <= 2035; yr++) {
@@ -918,12 +938,12 @@
         if (cObj.type === 'daisatsukai') badgeClass = 'badge-daisatsukai';
         else if (cObj.type === 'satsukai') badgeClass = 'badge-satsukai';
 
-        const currentMark = yr === 2026 ? ' <span style="color:var(--vermilion); font-size:0.8rem;">【今年】</span>' : '';
+        const currentMark = yr === 2026 ? ' <span style="color:var(--vermilion); font-size:0.84rem; font-weight:700;">【今年】</span>' : '';
 
         rowsHtml += `
           <tr class="${trClass}">
-            <td>${yr}年（${toWareki(yr)}）${currentMark}</td>
-            <td><strong>${cObj.name}</strong></td>
+            <td style="white-space:nowrap;">${yr}年（${toWarekiFull(yr)}）${currentMark}</td>
+            <td class="luck-cell-name">${cObj.name}</td>
             <td><span class="badge-mini ${badgeClass}">${cObj.label}</span></td>
             <td>${cObj.short}</td>
           </tr>
@@ -934,9 +954,6 @@
       document.getElementById('personal-result').classList.add('show');
     }
 
-    // =========================================================
-    // 5. 相性占いの実行・表示
-    // =========================================================
     function runCompatibilityDiagnosis() {
       const y1 = parseInt(document.getElementById('c1-year').value, 10);
       const m1 = parseInt(document.getElementById('c1-month').value, 10);
@@ -975,7 +992,6 @@
         detail = `${p1.fullStar}と${p2.fullStar}は性質やアプローチが異なるため、自分にないものを持つ相手として強く惹かれ合います。意見がぶつかったときは「相手は自分と違う星を持っている」と一歩引いて受け止めることで、最強の補完パートナーへと進化します。`;
       }
 
-      // 2026年の二人の運気バランス追記
       const c1_2026 = CYCLE_12[getYearCycleIndex(p1.starName, p1.isPlus, 2026)];
       const c2_2026 = CYCLE_12[getYearCycleIndex(p2.starName, p2.isPlus, 2026)];
       detail += `\n\n【2026年の運気バランス】\nあなたは「${c1_2026.name}（${c1_2026.label}）」、お相手は「${c2_2026.name}（${c2_2026.label}）」の年にあたります。運気が好調な方が相手を優しくサポートすることで、二人の絆がいっそう深まります。`;
@@ -988,9 +1004,6 @@
       document.getElementById('compat-result').classList.add('show');
     }
 
-    // =========================================================
-    // 6. イベント登録・初期起動
-    // =========================================================
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1000,9 +1013,9 @@
       });
     });
 
-    populateDateSelectors('p-year', 'p-month', 'p-day', 1961, 6, 30);
-    populateDateSelectors('c1-year', 'c1-month', 'c1-day', 1961, 6, 30);
-    populateDateSelectors('c2-year', 'c2-month', 'c2-day', 1965, 4, 15);
+    populateDateSelectors('p-year', 'p-month', 'p-day', 2026, 1, 1);
+    populateDateSelectors('c1-year', 'c1-month', 'c1-day', 2026, 1, 1);
+    populateDateSelectors('c2-year', 'c2-month', 'c2-day', 2026, 1, 1);
     renderMasterCycleTable();
 
     document.getElementById('btn-diagnose').addEventListener('click', runPersonalDiagnosis);
